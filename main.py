@@ -139,6 +139,18 @@ class Obstacle_Right(pygame.sprite.Sprite):
             
     def obstacle_right_kill(self):
         self.kill()
+
+def custom_event_listener():
+    canvas = window.canvas
+
+    def handle_event(event):
+        custom_event = pygame.event.Event(pygame.USEREVENT, custom_type=event.type)
+        pygame.event.post(custom_event)
+
+    canvas.addEventListener('blur', handle_event)
+    canvas.addEventListener('focus', handle_event)
+
+custom_event_listener()
             
 all_sprites = pygame.sprite.Group(Player)
 Obstacles = pygame.sprite.Group()
@@ -385,15 +397,4 @@ async def main():
         pygame.display.update()
         await asyncio.sleep(0)
 
-def custom_event_listener():
-    canvas = window.canvas
-
-    def handle_event(event):
-        custom_event = pygame.event.Event(pygame.USEREVENT, custom_type=event.type)
-        pygame.event.post(custom_event)
-
-    canvas.addEventListener('blur', handle_event)
-    canvas.addEventListener('focus', handle_event)
-
-custom_event_listener()
 asyncio.run(main())
