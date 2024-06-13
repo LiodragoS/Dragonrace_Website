@@ -487,18 +487,37 @@ frameborder="1"
         window.frames["iframe"].location = url;
     }
 
-    // Fullscreen automatically on page load
-    document.addEventListener("DOMContentLoaded", function() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
-            }
-    }        
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (!document.fullscreenElement) {
+          openFullscreen();
+        } else {
+          closeFullscreen();
+        }
+      }
+    });
+    
+    var elem = document.documentElement;
+    
+    function openFullscreen() {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+      }
+    }
+    
+    function closeFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+    }      
     </script>
 
 </body>
