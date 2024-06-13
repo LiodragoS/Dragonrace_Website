@@ -198,7 +198,7 @@ async def main():
        elif event.custom_type == 'focus':
         paused = False
 
-     if paused == False:
+     if paused == False or True:
     
         if Obstacle_Monitor == True:
           width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
