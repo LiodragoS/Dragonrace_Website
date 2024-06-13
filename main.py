@@ -139,18 +139,6 @@ class Obstacle_Right(pygame.sprite.Sprite):
             
     def obstacle_right_kill(self):
         self.kill()
-
-def custom_event_listener():
-    canvas = window.canvas
-
-    def handle_event(event):
-        custom_event = pygame.event.Event(pygame.USEREVENT, custom_type=event.type)
-        pygame.event.post(custom_event)
-
-    canvas.addEventListener('blur', handle_event)
-    canvas.addEventListener('focus', handle_event)
-
-custom_event_listener()
             
 all_sprites = pygame.sprite.Group(Player)
 Obstacles = pygame.sprite.Group()
@@ -198,6 +186,7 @@ async def main():
     global last_obstacle_spawn_time
     global obstacle_spawn_time
     global obstacle_speed
+    global paused
  
     # Creating an infinite loop to run the game
     while run:
@@ -205,11 +194,11 @@ async def main():
      for event in pygame.event.get():
       if event.type == pygame.USEREVENT:
        if event.custom_type == 'blur':
-        paused = False
+        paused = True
        elif event.custom_type == 'focus':
         paused = False
 
-     if not paused:
+     if paused == False:
     
         if Obstacle_Monitor == True:
           width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
