@@ -1,12 +1,15 @@
 <html lang="en-us"><script src="https://pygame-web.github.io/archives/0.9/pythons.js" type=module id=site data-LINES=57 data-CONSOLE=25 data-python=python3.12 data-os=vtx,fs,snd,gui async defer>#<!--
 
+import pygame  
+screen_info = pygame.display.Info()
+screen_width, screen_height = screen_info.current_w, screen_info.current_h
 print("""
 Loading dragonrace_m5 from dragonrace_m5.apk
     Pygbag Version : 0.9.1
     Template Version : 0.9.0
     Python  : 3.12
     CDN URL : https://pygame-web.github.io/archives/0.9/
-    Screen  : 1280x720
+    Screen  : screen_width*screen_height
     Title   : dragonrace_m5
     Folder  : dragonrace_m5
     Authors : pgw
@@ -16,12 +19,12 @@ Loading dragonrace_m5 from dragonrace_m5.apk
 
 
 # screen pixels (real, hardware)
-WIDTH=1024  # 1280
-HEIGHT=600  # 720
+WIDTH=screen_width
+HEIGHT=screen_height
 
 # reference/idealized screen pixels
-REFX = 1980
-REFY = 1080
+REFX = screen_width
+REFY = screen_height
 
 def u(real, ref, v):
     if abs(v)<0.9999999:
