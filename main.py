@@ -28,6 +28,7 @@ start_ticks = pygame.time.get_ticks()
 Player_move = True
 score_allowed = True
 highscore_reset = False
+paused = False
 
 Dragon_IMAGE = pygame.image.load('ALPHA Toothless 10.0.png').convert_alpha()
 if Player_Monitor == True:
@@ -188,6 +189,15 @@ async def main():
  
     # Creating an infinite loop to run the game
     while run:
+
+     for event in pygame.event.get():
+      if event.type == pygame.USEREVENT:
+       if event.custom_type == 'blur':
+        paused = True
+       elif event.custom_type == 'focus':
+        paused = False
+
+     if not paused:
     
         if Obstacle_Monitor == True:
           width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
