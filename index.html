@@ -1,6 +1,7 @@
 <html lang="en-us"><script src="https://pygame-web.github.io/archives/0.9/pythons.js" type=module id=site data-LINES=57 data-CONSOLE=25 data-python=python3.12 data-os=vtx,fs,snd,gui async defer>#<!--
 
-import pygame  
+import pygame
+pygame.init()
 screen_info = pygame.display.Info()
 screen_width, screen_height = screen_info.current_w, screen_info.current_h
 print("""
@@ -9,7 +10,7 @@ Loading dragonrace_m5 from dragonrace_m5.apk
     Template Version : 0.9.0
     Python  : 3.12
     CDN URL : https://pygame-web.github.io/archives/0.9/
-    Screen  : screen_widthxscreen_height
+    Screen  : {screen_width}x{screen_height}
     Title   : dragonrace_m5
     Folder  : dragonrace_m5
     Authors : pgw
@@ -19,8 +20,8 @@ Loading dragonrace_m5 from dragonrace_m5.apk
 
 
 # screen pixels (real, hardware)
-WIDTH=screen_width
-HEIGHT=screen_height
+WIDTH = screen_width
+HEIGHT = screen_height
 
 # reference/idealized screen pixels
 REFX = screen_width
@@ -67,7 +68,7 @@ async def custom_site():
 
     platform.document.body.style.background = "#7f7f7f"
 
-    #import pygame
+    #
 
     def compose():
         pygame.display.update()
