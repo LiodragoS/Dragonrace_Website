@@ -487,17 +487,18 @@ frameborder="1"
         window.frames["iframe"].location = url;
     }
 
-    // Fullscreen automatically on page load
-    document.addEventListener("DOMContentLoaded", function() {
-         if (document.documentElement.requestFullscreen) {
-              document.documentElement.requestFullscreen();
-         } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-             document.documentElement.mozRequestFullScreen();
-         } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-              document.documentElement.webkitRequestFullscreen();
-         } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-             document.documentElement.msRequestFullscreen();
-         }
+    <button id="fullscreen-btn">Vollbildmodus</button>
+    // Fullscreen button functionality
+    document.getElementById("fullscreen-btn").addEventListener("click", function() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
     }
         
     </script>
