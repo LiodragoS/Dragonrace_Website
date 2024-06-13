@@ -144,18 +144,18 @@ Obstacles = pygame.sprite.Group()
 obstacles_left = pygame.sprite.Group()
 obstacles_right = pygame.sprite.Group()
 
-color_button_quit = (100,255,255)   
+#color_button_quit = (100,255,255)   
 # light shade of the button 
-color_button_quit_light = (170,170,170) 
+#color_button_quit_light = (170,170,170) 
 # dark shade of the button 
-color_button_quit_dark = (100,100,100) 
+#color_button_quit_dark = (100,100,100) 
 
 # Positon der button
-width_button_quit = screen_width * 0.4444
-height_button_quit = screen_height * 0.4167 
+#width_button_quit = screen_width * 0.4444
+#height_button_quit = screen_height * 0.4167 
   
-font_quit_text = pygame.font.Font(None,int(screen_height * 0.0667)) 
-quit_text = font_quit_text.render('Quit', True, color_button_quit) 
+#font_quit_text = pygame.font.Font(None,int(screen_height * 0.0667)) 
+#quit_text = font_quit_text.render('Quit', True, color_button_quit) 
 
 
 color_button_restart = (100,255,255)   
@@ -188,6 +188,7 @@ async def main():
  
     # Creating an infinite loop to run the game
     while run:
+     if pygame.display.get_active():
     
         if Obstacle_Monitor == True:
           width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
@@ -290,8 +291,8 @@ async def main():
                 if event.type == pygame.MOUSEBUTTONUP: 
               
                   #if the mouse is clicked on the quit button the game is quited
-                  if width_button_quit/2 <= mouse[0] <= width_button_quit/2+screen_width * 0.5556 and height_button_quit/2 <= mouse[1] <= height_button_quit/2+screen_height * 0.0833: 
-                    pygame.quit() 
+                  #if width_button_quit/2 <= mouse[0] <= width_button_quit/2+screen_width * 0.5556 and height_button_quit/2 <= mouse[1] <= height_button_quit/2+screen_height * 0.0833: 
+                  #  pygame.quit() 
                 
                   #if the mouse is clicked on the restart button the game is restarted 
                   if width_button_restart/2 <= mouse[0] <= width_button_restart/2+screen_width * 0.5556 and height_button_restart/2 <= mouse[1] <= height_button_restart/2+screen_height * 0.0833: 
@@ -314,14 +315,14 @@ async def main():
               mouse = pygame.mouse.get_pos() 
       
               # if mouse is hovered on the quit button it changes to lighter shade  
-              if width_button_quit/2 <= mouse[0] <= width_button_quit/2+screen_width * 0.5556 and height_button_quit/2 <= mouse[1] <= height_button_quit/2+screen_height * 0.0833: 
-                pygame.draw.rect(screen,color_button_quit_light,[width_button_quit/2,height_button_quit/2,screen_width * 0.5556,screen_height * 0.0833]) 
+              #if width_button_quit/2 <= mouse[0] <= width_button_quit/2+screen_width * 0.5556 and height_button_quit/2 <= mouse[1] <= height_button_quit/2+screen_height * 0.0833: 
+              #  pygame.draw.rect(screen,color_button_quit_light,[width_button_quit/2,height_button_quit/2,screen_width * 0.5556,screen_height * 0.0833]) 
           
-              else: 
-                pygame.draw.rect(screen,color_button_quit_dark,[width_button_quit/2,height_button_quit/2,screen_width * 0.5556,screen_height * 0.0833]) 
+              #else: 
+              #  pygame.draw.rect(screen,color_button_quit_dark,[width_button_quit/2,height_button_quit/2,screen_width * 0.5556,screen_height * 0.0833]) 
       
               # superimposing the quit text onto the button 
-              screen.blit(quit_text , (width_button_quit/2+screen_width * 0.0694,height_button_quit/2+screen_height * 0.0208))
+              #screen.blit(quit_text , (width_button_quit/2+screen_width * 0.0694,height_button_quit/2+screen_height * 0.0208))
           
 
          
