@@ -5,14 +5,14 @@ pygame.init()
 screen_info = pygame.display.Info()
 screen_width, screen_height = screen_info.current_w, screen_info.current_h
 print("""
-Loading dragonrace_m5 from dragonrace_m6.apk
+Loading dragonrace_m6 from dragonrace_m6.apk
     Pygbag Version : 0.9.1
     Template Version : 0.9.0
     Python  : 3.12
     CDN URL : https://pygame-web.github.io/archives/0.9/
     Screen  : {screen_width}x{screen_height}
-    Title   : dragonrace_m5
-    Folder  : dragonrace_m5
+    Title   : dragonrace_m6
+    Folder  : dragonrace_m6
     Authors : pgw
     SPDX-License-Identifier: cookiecutter.spdx
 
@@ -90,10 +90,10 @@ async def custom_site():
 
     apk = "dragonrace_m6.apk"
 
-    bundle = "dragonrace_m5"
+    bundle = "dragonrace_m6"
 
     # the C or js loader could do that but be explicit.
-    appdir = Path(f"/data/data/{bundle}") # /data/data/dragonrace_m5
+    appdir = Path(f"/data/data/{bundle}") # /data/data/dragonrace_m6
     appdir.mkdir()
 
 
@@ -243,7 +243,7 @@ config = {
     user_canvas_managed : 0,
     ume_block : 1,
     can_close : 0,
-    archive : "dragonrace_m5",
+    archive : "dragonrace_m6",
     gui_debug : 3,
     cdn : "https://pygame-web.github.io/archives/0.9/",
     autorun : 0,
@@ -252,7 +252,7 @@ config = {
 
 </script>
 
-    <title>dragonrace_m5</title>
+    <title>dragonrace_m6</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
