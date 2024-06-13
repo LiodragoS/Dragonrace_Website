@@ -191,14 +191,14 @@ async def main():
     # Creating an infinite loop to run the game
     while run:
 
-     #for event in pygame.event.get():
-      #if event.type == pygame.USEREVENT:
-       #if event.custom_type == 'blur':
-        #paused = True
-       #elif event.custom_type == 'focus':
-        #paused = False
+     for event in pygame.event.get():
+      if event.type == pygame.USEREVENT:
+       if event.custom_type == 'blur':
+        paused = True
+       elif event.custom_type == 'focus':
+        paused = False
 
-     if paused == False or True:
+     if paused == False:
     
         if Obstacle_Monitor == True:
           width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
