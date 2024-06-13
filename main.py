@@ -188,7 +188,6 @@ async def main():
  
     # Creating an infinite loop to run the game
     while run:
-     if pygame.display.get_active():
     
         if Obstacle_Monitor == True:
           width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
@@ -375,5 +374,16 @@ async def main():
         # Updating the display surface
         pygame.display.update()
         await asyncio.sleep(0)
-        
+
+def custom_event_listener():
+    canvas = window.canvas
+
+    def handle_event(event):
+        custom_event = pygame.event.Event(pygame.USEREVENT, custom_type=event.type)
+        pygame.event.post(custom_event)
+
+    canvas.addEventListener('blur', handle_event)
+    canvas.addEventListener('focus', handle_event)
+
+custom_event_listener()
 asyncio.run(main())
