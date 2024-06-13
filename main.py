@@ -205,7 +205,7 @@ async def main():
      for event in pygame.event.get():
       if event.type == pygame.USEREVENT:
        if event.custom_type == 'blur':
-        paused = True
+        paused = False
        elif event.custom_type == 'focus':
         paused = False
 
