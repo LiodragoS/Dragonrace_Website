@@ -343,6 +343,22 @@ config = {
            right:10px;
            border: 1px solid black;
         }
+
+        #fullscreenButton {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #fullscreenButton:hover {
+            background-color: #45a049;
+        }
     </style>
 
     <script src="https://pygame-web.github.io/archives/0.9//browserfs.min.js"></script>
@@ -423,6 +439,8 @@ frameborder="1"
         <div id="terminal" tabIndex=1 align="left"></div>
     </div>
 
+    <button id="fullscreenButton">Toggle Fullscreen</button>
+
     <script type="application/javascript">
 
     async function custom_onload(debug_hidden) {
@@ -487,41 +505,67 @@ frameborder="1"
         window.frames["iframe"].location = url;
     }
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'f' || e.key === 'F') {
-        toggleFullscreen();
-      }
+    // Funktion zum Wechseln in den Vollbildmodus
+    function openFullscreen() {
+        var elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { // Safari
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { // IE11
+            elem.msRequestFullscreen();
+        }
+    }
+
+    // Funktion zum Beenden des Vollbildmodus
+    function closeFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { // Safari
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE11
+            document.msExitFullscreen();
+        }
+    }
+
+    // Funktion zum Umschalten des Vollbildmodus
+    function toggleFullscreen() {
+        if (!document.fullscreenElement &&    // alternative Standardmethode
+            !document.webkitFullscreenElement && // alternative WebKit-Methode
+            !document.msFullscreenElement) { // alternative MS-Methode
+            openFullscreen();
+        } else {
+            closeFullscreen();
+        }
+    }
+
+    // Event-Listener für den Button
+    document.getElementById("fullscreenButton").addEventListener("click", toggleFullscreen);
+
+    document.addEventListener('visibilitychange', function() {
+        var canvas = document.getElementById("canvas");
+        if (document.hidden) {
+            canvas.dispatchEvent(new CustomEvent('blur'));
+        } else {
+            canvas.dispatchEvent(new CustomEvent('focus'));
+        }
+    });
+        
+    window.addEventListener("message", function(event) {
+        if (event.data.type === "blur") {
+            const blurEvent = new CustomEvent("blur");
+            window.dispatchEvent(blurEvent);
+        } else if (event.data.type === "focus") {
+            const focusEvent = new CustomEvent("focus");
+            window.dispatchEvent(focusEvent);
+        }
+    });   
+    // Event-Listener für Mausklicks im Canvas
+    document.getElementById('canvas').addEventListener('click', function(event) {
+        // Nachricht an Python-Seite senden
+        window.postMessage({ type: 'mouse_click', position: { x: event.clientX, y: event.clientY } }, '*');
     });
     
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        openFullscreen();
-      } else {
-        closeFullscreen();
-      }
-    }
-    
-    var elem = document.documentElement;
-    
-    function openFullscreen() {
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) { /* Safari */
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE11 */
-        elem.msRequestFullscreen();
-      }
-    }
-    
-    function closeFullscreen() {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) { /* Safari */
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { /* IE11 */
-        document.msExitFullscreen();
-      }
-    }
     </script>
 
 </body>
