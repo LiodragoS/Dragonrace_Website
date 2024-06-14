@@ -199,6 +199,7 @@ async def main():
             if event.type == pygame.USEREVENT + 1:  # Custom 'blur' event
                 paused = True
                 pause_start_ticks = pygame.time.get_ticks()
+                last_obstacle_spawn_time = current_ticks
             elif event.type == pygame.USEREVENT + 2:  # Custom 'focus' event
                 paused = False
                 paused_duration += pygame.time.get_ticks() - pause_start_ticks
