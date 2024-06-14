@@ -550,6 +550,16 @@ frameborder="1"
             canvas.dispatchEvent(new CustomEvent('focus'));
         }
     });
+
+    window.addEventListener("message", function(event) {
+        if (event.data.type === "blur") {
+            const blurEvent = new CustomEvent("blur");
+            window.dispatchEvent(blurEvent);
+        } else if (event.data.type === "focus") {
+            const focusEvent = new CustomEvent("focus");
+            window.dispatchEvent(focusEvent);
+        }
+    });
     </script>
 
 </body>
