@@ -559,7 +559,13 @@ frameborder="1"
             const focusEvent = new CustomEvent("focus");
             window.dispatchEvent(focusEvent);
         }
-    });    
+    });   
+    // Event-Listener für Mausklicks im Canvas
+    document.getElementById('canvas').addEventListener('click', function(event) {
+        // Nachricht an Python-Seite senden
+        window.postMessage({ type: 'mouse_click', position: { x: event.clientX, y: event.clientY } }, '*');
+    });
+    
     </script>
 
 </body>
