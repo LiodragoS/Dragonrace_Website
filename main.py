@@ -24,6 +24,7 @@ gameDisplay_rect = screen.get_rect()
 pygame.display.set_caption('Dragonrace')
 
 start_ticks = pygame.time.get_ticks()
+current_ticks = pygame.time.get_ticks()
 pause_start_ticks = 0
 paused_duration = 0
 
@@ -31,6 +32,8 @@ Player_move = True
 score_allowed = True
 highscore_reset = False
 paused = False
+BLUR_EVENT = pygame.USEREVENT + 1
+FOCUS_EVENT = pygame.USEREVENT + 2
 
 Dragon_IMAGE = pygame.image.load('ALPHA Toothless 10.0.png').convert_alpha()
 if Player_Monitor == True:
@@ -195,20 +198,19 @@ async def main():
     # Creating an infinite loop to run the game
     while run:
 
-        for event in pygame.event.get():
-            if event.type == pygame.USEREVENT + 1:  # Custom 'blur' event
-                paused = True
-                pause_start_ticks = pygame.time.get_ticks()
-                last_obstacle_spawn_time = current_ticks
-            elif event.type == pygame.USEREVENT + 2:  # Custom 'focus' event
-                paused = False
-                paused_duration += pygame.time.get_ticks() - pause_start_ticks
+       for event in pygame.event.get():
+           if event.type == BLUR_EVENT:  # Custom 'blur' event
+               paused = True
+               pause_start_ticks = pygame.time.get_ticks()
+               last_obstacle_spawn_time = current_ticks
+           elif event.type == FOCUS_EVENT:  # Custom 'focus' event
+               paused = False
+               paused_duration += pygame.time.get_ticks() - pause_start_ticks
 
-        if paused:
-            continue
-    
-        current_ticks = pygame.time.get_ticks() - paused_duration
-
+       current_ticks = pygame.time.get_ticks() - paused_duration
+       if paused == False:
+            
+            
         if current_ticks - last_obstacle_spawn_time > obstacle_spawn_time:
             if Obstacle_Monitor == True:
               width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
