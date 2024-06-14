@@ -24,6 +24,8 @@ gameDisplay_rect = screen.get_rect()
 pygame.display.set_caption('Dragonrace')
 
 start_ticks = pygame.time.get_ticks()
+pause_start_ticks = 0
+paused_duration = 0
 
 Player_move = True
 score_allowed = True
@@ -187,19 +189,25 @@ async def main():
     global obstacle_spawn_time
     global obstacle_speed
     global paused
- 
+    global pause_start_ticks
+    global paused_duration
+
     # Creating an infinite loop to run the game
     while run:
 
         for event in pygame.event.get():
             if event.type == pygame.USEREVENT + 1:  # Custom 'blur' event
                 paused = True
+                pause_start_ticks = pygame.time.get_ticks()
             elif event.type == pygame.USEREVENT + 2:  # Custom 'focus' event
                 paused = False
+                paused_duration += pygame.time.get_ticks() - pause_start_ticks
 
         if paused:
             continue
     
+        current_ticks = pygame.time.get_ticks() - paused_duration
+
         if Obstacle_Monitor == True:
           width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
           width_obstacle_right = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
@@ -247,7 +255,7 @@ async def main():
         screen.blit(Jungle_IMAGE_Scaled, (0,0))  
         screen.blit(Dragon_IMAGE_Scaled, Player.rect.topleft)
     
-        if pygame.time.get_ticks() - last_obstacle_spawn_time > obstacle_spawn_time:
+        if current_ticks - last_obstacle_spawn_time > obstacle_spawn_time:
           if Player_Monitor == True:
             obstacle_spawn_time = obstacle_spawn_time -320 # Objekte werden nach dem spawnen schneller gespawnt
           else:
@@ -256,7 +264,7 @@ async def main():
             obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 3 # Objekte werden nach dem spawnen schneller
           else:
             obstacle_speed = obstacle_speed + screen_height * 0.00001667 # Objekte werden nach dem spawnen schneller
-          last_obstacle_spawn_time = pygame.time.get_ticks()
+          last_obstacle_spawn_time = current_ticks
       
           obstacle_left = Obstacle_Left(width_obstacle_left)
           obstacle_right = Obstacle_Right(width_obstacle_right)
@@ -314,7 +322,8 @@ async def main():
                     score_allowed = True
                     Player_move = True
                     start_ticks = pygame.time.get_ticks()
-                    last_obstacle_spawn_time = pygame.time.get_ticks()
+                    last_obstacle_spawn_time = 0
+                    paused_duration = 0  # Reset paused duration on restart
                     obstacle_speed = screen_height * 0.00167
                     if Player_Monitor == True:
                       obstacle_spawn_time = 10000 # Spawnt Objekte am Anfang alle 4 Sekunden
