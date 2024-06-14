@@ -177,9 +177,9 @@ async def custom_site():
         pg_bar(track.len)
         screen.blit(prompt, ( marginx+ ux(80), marginy - uy(10) ) )
         compose()
-        #print("""
-        #* Waiting for media user engagement : please click/touch page *
-    #""")
+        print("""
+        * Waiting for media user engagement : please click/touch page *
+    """)
         while not platform.window.MM.UME:
             await asyncio.sleep(.1)
 
@@ -548,16 +548,6 @@ frameborder="1"
             canvas.dispatchEvent(new CustomEvent('blur'));
         } else {
             canvas.dispatchEvent(new CustomEvent('focus'));
-        }
-    });
-
-    window.addEventListener("message", function(event) {
-        if (event.data.type === "blur") {
-            const blurEvent = new CustomEvent("blur");
-            window.dispatchEvent(blurEvent);
-        } else if (event.data.type === "focus") {
-            const focusEvent = new CustomEvent("focus");
-            window.dispatchEvent(focusEvent);
         }
     });
     </script>
