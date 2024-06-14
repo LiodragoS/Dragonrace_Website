@@ -24,16 +24,10 @@ gameDisplay_rect = screen.get_rect()
 pygame.display.set_caption('Dragonrace')
 
 start_ticks = pygame.time.get_ticks()
-current_ticks = pygame.time.get_ticks()
-pause_start_ticks = 0
-paused_duration = 0
 
 Player_move = True
 score_allowed = True
 highscore_reset = False
-paused = False
-BLUR_EVENT = pygame.USEREVENT + 1
-FOCUS_EVENT = pygame.USEREVENT + 2
 
 Dragon_IMAGE = pygame.image.load('ALPHA Toothless 10.0.png').convert_alpha()
 if Player_Monitor == True:
@@ -150,20 +144,6 @@ Obstacles = pygame.sprite.Group()
 obstacles_left = pygame.sprite.Group()
 obstacles_right = pygame.sprite.Group()
 
-#color_button_quit = (100,255,255)   
-# light shade of the button 
-#color_button_quit_light = (170,170,170) 
-# dark shade of the button 
-#color_button_quit_dark = (100,100,100) 
-
-# Positon der button
-#width_button_quit = screen_width * 0.4444
-#height_button_quit = screen_height * 0.4167 
-  
-#font_quit_text = pygame.font.Font(None,int(screen_height * 0.0667)) 
-#quit_text = font_quit_text.render('Quit', True, color_button_quit) 
-
-
 color_button_restart = (100,255,255)   
 # light shade of the button 
 color_button_restart_light = (170,170,170)   
@@ -191,48 +171,75 @@ async def main():
     global last_obstacle_spawn_time
     global obstacle_spawn_time
     global obstacle_speed
-    global paused
-    global pause_start_ticks
-    global paused_duration
 
     # Creating an infinite loop to run the game
     while run:
-
-       for event in pygame.event.get():
-           if event.type == BLUR_EVENT:  # Custom 'blur' event
-               paused = True
-               pause_start_ticks = pygame.time.get_ticks()
-               last_obstacle_spawn_time = current_ticks
-           elif event.type == FOCUS_EVENT:  # Custom 'focus' event
-               paused = False
-               paused_duration += pygame.time.get_ticks() - pause_start_ticks
-
-       current_ticks = pygame.time.get_ticks() - paused_duration
-       if paused == False:
             
-            
-        if current_ticks - last_obstacle_spawn_time > obstacle_spawn_time:
-            if Obstacle_Monitor == True:
-              width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
-              width_obstacle_right = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+        if pygame.time.get_ticks() - last_obstacle_spawn_time > obstacle_spawn_time:
+            # Wenn 200 score erreicht ist wird der Bereich wo man durchfliegt kleiner
+            if score < 200:
+                if Obstacle_Monitor == True:
+                  width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+                  width_obstacle_right = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
     
-              while width_obstacle_left + width_obstacle_right > screen_width * 0.5370 * 1.5:
-                width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
-                width_obstacle_right = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+                  while width_obstacle_left + width_obstacle_right > screen_width * 0.5370 * 1.5:
+                    width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+                    width_obstacle_right = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+                else:
+                  width_obstacle_left = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
+                  width_obstacle_right = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
+    
+                  while width_obstacle_left + width_obstacle_right > screen_width * 0.5370:
+                    width_obstacle_left = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
+                    width_obstacle_right = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
             else:
-              width_obstacle_left = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
-              width_obstacle_right = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
+                if Obstacle_Monitor == True:
+                  width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+                  width_obstacle_right = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
     
-              while width_obstacle_left + width_obstacle_right > screen_width * 0.5370:
-                width_obstacle_left = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
-                width_obstacle_right = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
-
+                  while not screen_width * 0.5370 * 1.2 < width_obstacle_left + width_obstacle_right < screen_width * 0.5370 * 1.5:
+                    width_obstacle_left = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+                    width_obstacle_right = random.randrange(int(screen_width * 0.0370 * 1.5), int(screen_width * 0.5370 * 1.5))
+                else:
+                  width_obstacle_left = random.randrange(int(screen_width * 0.0370) , int(screen_width * 0.5370))
+                  width_obstacle_right = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
+    
+                  while not screen_width * 0.5370 * 0.7 < width_obstacle_left + width_obstacle_right < screen_width * 0.5370:
+                    width_obstacle_left = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
+                    width_obstacle_right = random.randrange(int(screen_width * 0.0370), int(screen_width * 0.5370))
+           
+            obstacle_left = Obstacle_Left(width_obstacle_left)
+            obstacle_right = Obstacle_Right(width_obstacle_right)
+            Obstacles.add(obstacle_left, obstacle_right)
+            obstacles_left.add(obstacle_left)
+            obstacles_right.add(obstacle_right)
+            
+            if Player_Monitor == True:
+              obstacle_spawn_time = obstacle_spawn_time -320 # Objekte werden nach dem spawnen schneller gespawnt
+            else:
+              obstacle_spawn_time = obstacle_spawn_time - 40 # Objekte werden nach dem spawnen schneller gespawnt
+            if Player_Monitor == True:
+              obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 3 * 1.5 # Objekte werden nach dem spawnen schneller
+            else:
+              obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 1.5 # Objekte werden nach dem spawnen schneller
+            last_obstacle_spawn_time = pygame.time.get_ticks()
+            
+            if Player_Monitor == True:
+              if obstacle_spawn_time < 2000: # Begrenzt die Spawngeschwindigkeit bei max 2 Sekunden
+                obstacle_spawn_time = 2000
+            else:
+              if obstacle_spawn_time < 1000: # Begrenzt die Spawngeschwindigkeit bei max 1 Sekunde
+                obstacle_spawn_time = 1000
+       
+            if obstacle_speed > screen_height * 0.005: # Begrentzt die Geschwindigkeit
+              obstacle_speed = screen_height * 0.005            
+        
         # FPS auf 60 setzten
         dt = clock.tick(60)
 
         if score_allowed == True:
 
-          score = (current_ticks - start_ticks) // 1000
+          score = (pygame.time.get_ticks() - start_ticks) // 1000
       
         # Den bisherigen Highscore aus der Datei lesen
         try:
@@ -258,33 +265,6 @@ async def main():
 
         screen.blit(Jungle_IMAGE_Scaled, (0,0))  
         screen.blit(Dragon_IMAGE_Scaled, Player.rect.topleft)
-    
-        if current_ticks - last_obstacle_spawn_time > obstacle_spawn_time:
-          if Player_Monitor == True:
-            obstacle_spawn_time = obstacle_spawn_time -320 # Objekte werden nach dem spawnen schneller gespawnt
-          else:
-            obstacle_spawn_time = obstacle_spawn_time - 40 # Objekte werden nach dem spawnen schneller gespawnt
-          if Player_Monitor == True:
-            obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 3 * 1.5 # Objekte werden nach dem spawnen schneller
-          else:
-            obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 1.5 # Objekte werden nach dem spawnen schneller
-          last_obstacle_spawn_time = pygame.time.get_ticks()
-      
-          obstacle_left = Obstacle_Left(width_obstacle_left)
-          obstacle_right = Obstacle_Right(width_obstacle_right)
-          Obstacles.add(obstacle_left, obstacle_right)
-          obstacles_left.add(obstacle_left)
-          obstacles_right.add(obstacle_right)
-      
-        if Player_Monitor == True:
-          if obstacle_spawn_time < 2000: # Begrenzt die Spawngeschwindigkeit bei max 2 Sekunden
-            obstacle_spawn_time = 2000
-        else:
-          if obstacle_spawn_time < 1000: # Begrenzt die Spawngeschwindigkeit bei max 1 Sekunde
-            obstacle_spawn_time = 1000
-       
-        if obstacle_speed > screen_height * 0.005: # Begrentzt die Geschwindigkeit
-          obstacle_speed = screen_height * 0.005
 
         #all_sprites.update()
         all_sprites.add(Player)
@@ -311,10 +291,6 @@ async def main():
               #checks if a mouse is clicked 
               for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONUP: 
-              
-                  #if the mouse is clicked on the quit button the game is quited
-                  #if width_button_quit/2 <= mouse[0] <= width_button_quit/2+screen_width * 0.5556 and height_button_quit/2 <= mouse[1] <= height_button_quit/2+screen_height * 0.0833: 
-                  #  pygame.quit() 
                 
                   #if the mouse is clicked on the restart button the game is restarted 
                   if width_button_restart/2 <= mouse[0] <= width_button_restart/2+screen_width * 0.5556 and height_button_restart/2 <= mouse[1] <= height_button_restart/2+screen_height * 0.0833: 
@@ -327,8 +303,6 @@ async def main():
                     Player_move = True
                     start_ticks = pygame.time.get_ticks()
                     last_obstacle_spawn_time = pygame.time.get_ticks()
-                    current_ticks = 0
-                    paused_duration = 0  # Reset paused duration on restart
                     obstacle_speed = screen_height * 0.00167
                     if Player_Monitor == True:
                       obstacle_spawn_time = 10000 # Spawnt Objekte am Anfang alle 10 Sekunden
@@ -337,18 +311,6 @@ async def main():
       
               # stores the (x,y) coordinates into the variable as a tuple 
               mouse = pygame.mouse.get_pos() 
-      
-              # if mouse is hovered on the quit button it changes to lighter shade  
-              #if width_button_quit/2 <= mouse[0] <= width_button_quit/2+screen_width * 0.5556 and height_button_quit/2 <= mouse[1] <= height_button_quit/2+screen_height * 0.0833: 
-              #  pygame.draw.rect(screen,color_button_quit_light,[width_button_quit/2,height_button_quit/2,screen_width * 0.5556,screen_height * 0.0833]) 
-          
-              #else: 
-              #  pygame.draw.rect(screen,color_button_quit_dark,[width_button_quit/2,height_button_quit/2,screen_width * 0.5556,screen_height * 0.0833]) 
-      
-              # superimposing the quit text onto the button 
-              #screen.blit(quit_text , (width_button_quit/2+screen_width * 0.0694,height_button_quit/2+screen_height * 0.0208))
-          
-
          
               # if mouse is hovered on the restart button it changes to lighter shade  
               if width_button_restart/2 <= mouse[0] <= width_button_restart/2+screen_width * 0.5556 and height_button_restart/2 <= mouse[1] <= height_button_restart/2+screen_height * 0.0833: 
