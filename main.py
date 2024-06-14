@@ -191,13 +191,13 @@ async def main():
     # Creating an infinite loop to run the game
     while run:
 
-     for event in pygame.event.get():
+        for event in pygame.event.get():
             if event.type == pygame.USEREVENT + 1:  # Custom 'blur' event
                 paused = True
             elif event.type == pygame.USEREVENT + 2:  # Custom 'focus' event
                 paused = False
 
-     if paused:
+        if paused:
             continue
     
         if Obstacle_Monitor == True:
