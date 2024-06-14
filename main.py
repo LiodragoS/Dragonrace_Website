@@ -58,7 +58,7 @@ highscore_background = pygame.Rect(screen_width * 0.1481, screen_height * 0.5, s
 New_personal_best_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938, screen_width * 0.9444, screen_height * 0.0563)
 
 if Player_Monitor == True:
-  obstacle_spawn_time = 10000 # Spawnt Objekte am Anfang alle 4 Sekunden
+  obstacle_spawn_time = 10000 # Spawnt Objekte am Anfang alle 10 Sekunden
 else:
  obstacle_spawn_time = 4000  # Spawnt Objekte am Anfang alle 4 Sekunden
 last_obstacle_spawn_time = 0
@@ -240,7 +240,7 @@ async def main():
 
         # Den aktuellen Score mit dem Highscore vergleichen
         if score > highscore:
-            # Den Highscore aktualisieren, wenn der aktuelle Score h�her ist
+            # Den Highscore aktualisieren, wenn der aktuelle Score hoeher ist
             with open('highscore.txt', 'w') as f:
                 f.write(str(score))
             
@@ -262,10 +262,10 @@ async def main():
           else:
             obstacle_spawn_time = obstacle_spawn_time - 40 # Objekte werden nach dem spawnen schneller gespawnt
           if Player_Monitor == True:
-            obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 3 # Objekte werden nach dem spawnen schneller
+            obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 3 * 1.5 # Objekte werden nach dem spawnen schneller
           else:
-            obstacle_speed = obstacle_speed + screen_height * 0.00001667 # Objekte werden nach dem spawnen schneller
-          last_obstacle_spawn_time = current_ticks
+            obstacle_speed = obstacle_speed + screen_height * 0.00001667 * 1.5 # Objekte werden nach dem spawnen schneller
+          last_obstacle_spawn_time = pygame.time.get_ticks()
       
           obstacle_left = Obstacle_Left(width_obstacle_left)
           obstacle_right = Obstacle_Right(width_obstacle_right)
@@ -323,7 +323,7 @@ async def main():
                     score_allowed = True
                     Player_move = True
                     start_ticks = pygame.time.get_ticks()
-                    last_obstacle_spawn_time = current_ticks
+                    last_obstacle_spawn_time = pygame.time.get_ticks()
                     current_ticks = 0
                     paused_duration = 0  # Reset paused duration on restart
                     obstacle_speed = screen_height * 0.00167
@@ -396,5 +396,5 @@ async def main():
         # Updating the display surface
         pygame.display.update()
         await asyncio.sleep(0)
-        print(current_ticks)
+
 asyncio.run(main())
