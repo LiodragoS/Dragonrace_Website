@@ -1,5 +1,4 @@
-﻿# This Python file uses the following encoding: Latin-1
-# Importing the pygame modules
+﻿# Importing the pygame modules
 import pygame
 import random
 import asyncio
@@ -583,6 +582,10 @@ while waiting_for_input:  # With that the game on the website does not load befo
             start_ticks = pygame.time.get_ticks()
             last_obstacle_spawn_time = pygame.time.get_ticks()
             waiting_for_input = False
+    if pygame.time.get_ticks() > 5000: 
+        start_ticks = pygame.time.get_ticks()
+        last_obstacle_spawn_time = pygame.time.get_ticks()
+        waiting_for_input = False
             
 run = True
             
