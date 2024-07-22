@@ -1,8 +1,7 @@
 ﻿# Importing the pygame modules
-import random
 import pygame
+import random
 import asyncio
-import sys
 from pygame.locals import *
  
 # Initiate pygame and giver permissions to use pygames funktions
@@ -55,8 +54,9 @@ def scale_image(base_image, base_resolution_image, current_resolution, manual_sc
 
 
 start_ticks = pygame.time.get_ticks()
-#paused_ticks = 0
-#start_waiting_for_input = False
+paused_ticks = 0
+paused_ticks_single = 0
+start_waiting_for_input = False
 
 Player_move = True
 score_allowed = True
@@ -574,12 +574,13 @@ else:
   font_restart_text = pygame.font.SysFont(None, scaled_font_size_restart_text)
 restart_text = font_restart_text.render('Restart', True, color_button_restart) 
 
-#waiting_for_input = True
-#while waiting_for_input:  # With that the game on the website does not load before you interact with it
-#    if pygame.time.get_ticks() > 10000: 
-#        start_ticks = pygame.time.get_ticks()
-#        last_obstacle_spawn_time = pygame.time.get_ticks()
-#        waiting_for_input = False
+waiting_for_input = True
+while waiting_for_input:  # With that the game on the website does not load before you interact with it
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
+            start_ticks = pygame.time.get_ticks()
+            last_obstacle_spawn_time = pygame.time.get_ticks()
+            waiting_for_input = False
             
 run = True
             
@@ -636,9 +637,10 @@ async def main():
     global random_box_timer
     global smaller_gap
     global bigger_gap
-    #global waiting_for_input
-    #global paused_ticks
-    #global start_waiting_for_input
+    global waiting_for_input
+    global paused_ticks
+    global paused_ticks_single
+    global start_waiting_for_input
 
     # Creating an infinite loop to run the game
     while run:
@@ -650,25 +652,26 @@ async def main():
         #if 14000 < pygame.time.get_ticks() - start_ticks < 14100:
         #   waiting_for_input = True
 
-        #if waiting_for_input:
-        #   pause_start = pygame.time.get_ticks()
-        #   pygame.mixer_music.pause()
-        #   start_waiting_for_input = True
-        #else:
-        #   if start_waiting_for_input == True:
-        #     pygame.mixer_music.unpause()
-        #     start_waiting_for_input = False
-        #while waiting_for_input:  # With that the game on the website does not load before you interact with it
-        #    for event in pygame.event.get():
-        #        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-        #            paused_ticks = pygame.time.get_ticks() - pause_start + paused_ticks # Takes the ammount of pause time
-        #            paused_ticks_single = pygame.time.get_ticks() - pause_start
-        #            last_obstacle_spawn_time = last_obstacle_spawn_time + paused_ticks_single
-        #            waiting_for_input = False
+        if waiting_for_input:
+           pause_start = pygame.time.get_ticks()
+           pygame.mixer_music.pause()
+           start_waiting_for_input = True
+        else:
+           if start_waiting_for_input == True:
+             pygame.mixer_music.unpause()
+             start_waiting_for_input = False
+        while waiting_for_input:  # With that the game on the website does not load before you interact with it
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
+                    paused_ticks = pygame.time.get_ticks() - pause_start + paused_ticks # Takes the ammount of pause time
+                    start_box_timer = start_box_timer + paused_ticks
+                    paused_ticks_single = pygame.time.get_ticks() - pause_start
+                    last_obstacle_spawn_time = last_obstacle_spawn_time + paused_ticks_single
+                    waiting_for_input = False
         #print("After_waiting_for_input")
         
         if score_allowed == True:
-          score = (pygame.time.get_ticks() - start_ticks) // 1000    
+          score = (pygame.time.get_ticks() - start_ticks - paused_ticks) // 1000    
           
         if pygame.time.get_ticks() - last_obstacle_spawn_time > obstacle_spawn_time:
             # If 150 score is reached the area to fly through gets smaller
@@ -1186,8 +1189,8 @@ async def main():
                             Lifebar_timer_check = True
                             first_hit = True
                             cooldown = False
-                            #waiting_for_input = False
-                            #start_waiting_for_input = False
+                            waiting_for_input = False
+                            start_waiting_for_input = False
                         
                             life_box_group.empty()
                             smaller_gap_box_group.empty()
@@ -1195,7 +1198,8 @@ async def main():
                             slow_time_box_group.empty()
                             spikes_box_group.empty()
 
-                            #paused_ticks = 0
+                            paused_ticks = 0
+                            paused_ticks_single = 0
                             random_box_timer = random.randrange(25000, 40000, 1000)
                             Lifebar_time = 0
                             Lifebar_activation_time = True
