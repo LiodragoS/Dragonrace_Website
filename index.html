@@ -5,14 +5,14 @@ pygame.init()
 screen_info = pygame.display.Info()
 screen_width, screen_height = screen_info.current_w, screen_info.current_h
 print("""
-Loading dragonrace_24 from dragonrace_m24.apk
+Loading dragonrace_25 from dragonrace_m25.apk
     Pygbag Version : 0.9.1
     Template Version : 0.9.0
     Python  : 3.12
     CDN URL : https://pygame-web.github.io/archives/0.9/
     Screen  : {screen_width}x{screen_height}
-    Title   : dragonrace_m24
-    Folder  : dragonrace_m24
+    Title   : dragonrace_m25
+    Folder  : dragonrace_m25
     Authors : pgw
     SPDX-License-Identifier: cookiecutter.spdx
 
@@ -88,12 +88,12 @@ async def custom_site():
 
 
 
-    apk = "dragonrace_m24.apk"
+    apk = "dragonrace_m25.apk"
 
-    bundle = "dragonrace_m24"
+    bundle = "dragonrace_m25"
 
     # the C or js loader could do that but be explicit.
-    appdir = Path(f"/data/data/{bundle}") # /data/data/dragonrace_m24
+    appdir = Path(f"/data/data/{bundle}") # /data/data/dragonrace_m25
     appdir.mkdir()
 
 
@@ -243,7 +243,7 @@ config = {
     user_canvas_managed : 0,
     ume_block : 1,
     can_close : 0,
-    archive : "dragonrace_m24",
+    archive : "dragonrace_m25",
     gui_debug : 3,
     cdn : "https://pygame-web.github.io/archives/0.9/",
     autorun : 0,
@@ -252,7 +252,7 @@ config = {
 
 </script>
 
-    <title>dragonrace_m24</title>
+    <title>dragonrace_m25</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -267,31 +267,6 @@ config = {
 
 
     <link rel="icon" type="image/png" href="favicon.png" sizes="16x16">
-
-
-    let isPaused = false;
-
-    function pauseGame() {
-        isPaused = true;
-        document.getElementById('status').textContent = 'Spiel ist pausiert';
-        waiting_for_input = True
-        // Weitere Logik zum Pausieren des Spiels hier hinzufügen
-    }
-
-    function resumeGame() {
-        isPaused = false;
-        document.getElementById('status').textContent = 'Spiel läuft';
-        waiting_for_input = False
-        // Weitere Logik zum Fortsetzen des Spiels hier hinzufügen
-    }
-
-    window.addEventListener('blur', function() {
-        pauseGame();
-    });
-
-    window.addEventListener('focus', function() {
-        resumeGame();
-    });
 
 
     <style>
@@ -390,6 +365,32 @@ config = {
     </style>
 
     <script src="https://pygame-web.github.io/archives/0.9//browserfs.min.js"></script>
+    
+    <script>
+    let isPaused = false;
+
+    function pauseGame() {
+        isPaused = true;
+        document.getElementById('status').textContent = 'Spiel ist pausiert';
+        waiting_for_input = True
+        // Weitere Logik zum Pausieren des Spiels hier hinzufügen
+    }
+
+    function resumeGame() {
+        isPaused = false;
+        document.getElementById('status').textContent = 'Spiel läuft';
+        waiting_for_input = False
+        // Weitere Logik zum Fortsetzen des Spiels hier hinzufügen
+    }
+
+    window.addEventListener('blur', function() {
+        pauseGame();
+    });
+
+    window.addEventListener('focus', function() {
+        resumeGame();
+    });
+    </script>
 
 </head>
 
