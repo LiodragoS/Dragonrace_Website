@@ -1,6 +1,6 @@
 ﻿# Importing the pygame modules
-import random
 import pygame
+import random
 import asyncio
 import sys
 from pygame.locals import *
