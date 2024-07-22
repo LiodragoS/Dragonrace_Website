@@ -366,31 +366,31 @@ config = {
 
     <script src="https://pygame-web.github.io/archives/0.9//browserfs.min.js"></script>
     
-    <script>
-    let isPaused = false;
+    // <script>
+    // let isPaused = false;
 
-    function pauseGame() {
-        isPaused = true;
-        document.getElementById('status').textContent = 'Spiel ist pausiert';
-        waiting_for_input = True
-        // Weitere Logik zum Pausieren des Spiels hier hinzufügen
-    }
+    // function pauseGame() {
+    //    isPaused = true;
+    //    document.getElementById('status').textContent = 'Spiel ist pausiert';
+    //    waiting_for_input = True
+    //    // Weitere Logik zum Pausieren des Spiels hier hinzufügen
+    //}
 
-    function resumeGame() {
-        isPaused = false;
-        document.getElementById('status').textContent = 'Spiel läuft';
-        waiting_for_input = False
-        // Weitere Logik zum Fortsetzen des Spiels hier hinzufügen
-    }
+    //function resumeGame() {
+    //    isPaused = false;
+    //    document.getElementById('status').textContent = 'Spiel läuft';
+    //    waiting_for_input = False
+    //    // Weitere Logik zum Fortsetzen des Spiels hier hinzufügen
+    //}
 
-    window.addEventListener('blur', function() {
-        pauseGame();
-    });
+    //window.addEventListener('blur', function() {
+    //    pauseGame();
+    //});
 
-    window.addEventListener('focus', function() {
-        resumeGame();
-    });
-    </script>
+    //window.addEventListener('focus', function() {
+    //    resumeGame();
+    //});
+    // </script>
 
 </head>
 
