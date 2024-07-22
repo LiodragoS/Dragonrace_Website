@@ -1,4 +1,5 @@
-﻿# Importing the pygame modules
+﻿# This Python file uses the following encoding: Latin-1
+# Importing the pygame modules
 import pygame
 import random
 import asyncio
@@ -579,10 +580,6 @@ waiting_for_input = True
 while waiting_for_input:  # With that the game on the website does not load before you interact with it
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-            start_ticks = pygame.time.get_ticks()
-            last_obstacle_spawn_time = pygame.time.get_ticks()
-            waiting_for_input = False
-        if pygame.time.get_ticks() > 2000:
             start_ticks = pygame.time.get_ticks()
             last_obstacle_spawn_time = pygame.time.get_ticks()
             waiting_for_input = False
