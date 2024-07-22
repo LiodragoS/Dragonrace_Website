@@ -269,31 +269,6 @@ config = {
     <link rel="icon" type="image/png" href="favicon.png" sizes="16x16">
 
 
-    let isPaused = false;
-
-    function pauseGame() {
-        isPaused = true;
-        document.getElementById('status').textContent = 'Spiel ist pausiert';
-        waiting_for_input = True
-        // Weitere Logik zum Pausieren des Spiels hier hinzufügen
-    }
-
-    function resumeGame() {
-        isPaused = false;
-        document.getElementById('status').textContent = 'Spiel läuft';
-        waiting_for_input = False
-        // Weitere Logik zum Fortsetzen des Spiels hier hinzufügen
-    }
-
-    window.addEventListener('blur', function() {
-        pauseGame();
-    });
-
-    window.addEventListener('focus', function() {
-        resumeGame();
-    });
-
-
     <style>
         #fullscreenButton {
             position: fixed;
