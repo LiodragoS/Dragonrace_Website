@@ -1,10 +1,8 @@
-﻿# This Python file uses the following encoding: Latin-1
-# Importing the pygame modules
+﻿# Importing the pygame modules
 import pygame
 import random
 import asyncio
 from pygame.locals import *
-from pygame.time import get_ticks
  
 # Initiate pygame and giver permissions to use pygames funktions
 pygame.init()
@@ -58,6 +56,7 @@ def scale_image(base_image, base_resolution_image, current_resolution, manual_sc
 start_ticks = pygame.time.get_ticks()
 paused_ticks = 0
 paused_ticks_single = 0
+waiting_for_input = False
 start_waiting_for_input = False
 
 Player_move = True
@@ -576,17 +575,17 @@ else:
   font_restart_text = pygame.font.SysFont(None, scaled_font_size_restart_text)
 restart_text = font_restart_text.render('Restart', True, color_button_restart) 
 
-waiting_for_input = True
-while waiting_for_input:  # With that the game on the website does not load before you interact with it
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-            start_ticks = pygame.time.get_ticks()
-            last_obstacle_spawn_time = pygame.time.get_ticks()
-            waiting_for_input = False
-    if pygame.time.get_ticks() > 5000: 
-        start_ticks = pygame.time.get_ticks()
-        last_obstacle_spawn_time = pygame.time.get_ticks()
-        waiting_for_input = False
+#waiting_for_input = True
+#while waiting_for_input:  # With that the game on the website does not load before you interact with it
+#    for event in pygame.event.get():
+#        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
+#            start_ticks = pygame.time.get_ticks()
+#            last_obstacle_spawn_time = pygame.time.get_ticks()
+#            waiting_for_input = False
+#    if pygame.time.get_ticks() > 5000: 
+#        start_ticks = pygame.time.get_ticks()
+#        last_obstacle_spawn_time = pygame.time.get_ticks()
+#        waiting_for_input = False
             
 run = True
             
@@ -1318,8 +1317,8 @@ async def main():
         #print(first_hit)
         #print(Lifebar_time)
         # Updating the display surface
+        #print("Fully_loaded")
         pygame.display.update()
         await asyncio.sleep(0)
-        #print("Fully_loaded")
 
 asyncio.run(main())
