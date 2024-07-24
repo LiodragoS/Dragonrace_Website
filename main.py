@@ -1,5 +1,4 @@
-﻿# This Python file uses the following encoding: Latin-1
-# Importing the pygame modules
+﻿# Importing the pygame modules
 import random
 import pygame
 import asyncio
