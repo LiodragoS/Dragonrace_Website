@@ -1,7 +1,7 @@
 ﻿# This Python file uses the following encoding: Latin-1
 # Importing the pygame modules
-import pygame
 import random
+import pygame
 import asyncio
 from pygame.locals import *
  
@@ -576,17 +576,19 @@ else:
   font_restart_text = pygame.font.SysFont(None, scaled_font_size_restart_text)
 restart_text = font_restart_text.render('Restart', True, color_button_restart) 
 
-#waiting_for_input = True
-#while waiting_for_input:  # With that the game on the website does not load before you interact with it
-#    for event in pygame.event.get():
-#        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-#            start_ticks = pygame.time.get_ticks()
-#            last_obstacle_spawn_time = pygame.time.get_ticks()
-#            waiting_for_input = False
-#    if pygame.time.get_ticks() > 5000: 
-#        start_ticks = pygame.time.get_ticks()
-#        last_obstacle_spawn_time = pygame.time.get_ticks()
-#        waiting_for_input = False
+waiting_for_input = True
+while waiting_for_input:  # With that the game on the website does not load before you interact with it
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
+            start_ticks = pygame.time.get_ticks()
+            last_obstacle_spawn_time = pygame.time.get_ticks()
+            start_box_timer = pygame.time.get_ticks()
+            waiting_for_input = False
+    if pygame.time.get_ticks() > 6000: 
+        start_ticks = pygame.time.get_ticks()
+        last_obstacle_spawn_time = pygame.time.get_ticks()
+        start_box_timer = pygame.time.get_ticks()
+        waiting_for_input = False
             
 run = True
             
@@ -666,7 +668,7 @@ async def main():
            if start_waiting_for_input == True:
              pygame.mixer_music.unpause()
              start_waiting_for_input = False
-        while waiting_for_input:  # With that the game on the website does not load before you interact with it
+        while waiting_for_input:  # With that the game on the website does not load if waiting_for_input is True
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
                     paused_ticks = pygame.time.get_ticks() - pause_start + paused_ticks # Takes the ammount of pause time
@@ -1317,8 +1319,8 @@ async def main():
         #print(pygame.time.get_ticks() - Lifebar_timer)
         #print(first_hit)
         #print(Lifebar_time)
-        # Updating the display surface
         #print("Fully_loaded")
+        # Updating the display surface
         pygame.display.update()
         await asyncio.sleep(0)
 
