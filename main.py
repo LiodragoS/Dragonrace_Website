@@ -38,7 +38,7 @@ pygame.init() # Initiate pygame and giver permissions to use pygames funktions
 
 # Get the screen resolution
 screen_info = pygame.display.Info()
-screen_width, screen_height = screen_info.current_w -1434, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360; To get my phone resolution on FULLHD screen: screen_info.current_w -1434, screen_info.current_h
+screen_width, screen_height = screen_info.current_w, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360; To get my phone resolution on FULLHD screen: screen_info.current_w -1434, screen_info.current_h
 screen = pygame.display.set_mode((screen_width, screen_height))
 Player_Monitor = False
 Obstacle_Monitor = False

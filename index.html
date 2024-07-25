@@ -175,7 +175,7 @@ async def custom_site():
         fnt = pygame.sysfont.SysFont("freesans",  uy(screen_width * 0.0417 * 1.5) )
         prompt = fnt.render("Ready to start !", True, "blue")
         pg_bar(track.len)
-        screen.blit(prompt, ( marginx+ ux(20), marginy - uy(30) ) )
+        screen.blit(prompt, ( marginx+ ux(20), screen_height / 2 * 0.84 ) )
         compose()
         print("""
         * Waiting for media user engagement : please click/touch page *
