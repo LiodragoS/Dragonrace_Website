@@ -38,7 +38,7 @@ pygame.init() # Initiate pygame and giver permissions to use pygames funktions
 
 # Get the screen resolution
 screen_info = pygame.display.Info()
-screen_width, screen_height = screen_info.current_w, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360; To get my phone resolution on FULLHD screen: screen_info.current_w -1434, screen_info.current_h
+screen_width, screen_height = screen_info.current_w -1434, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360; To get my phone resolution on FULLHD screen: screen_info.current_w -1434, screen_info.current_h
 screen = pygame.display.set_mode((screen_width, screen_height))
 Player_Monitor = False
 Obstacle_Monitor = False
@@ -220,47 +220,89 @@ Red_Cloud_IMAGE_Scaled = pygame.transform.scale(Red_Cloud_IMAGE, (neue_breite_re
 
 
 # Lifebar images
-Lifebar_3_3_IMAGE = pygame.image.load("Lifebar 3-3 8.0.png")
-manual_scale = 0.099
-Lifebar_3_3_IMAGE_Scaled = scale_image(Lifebar_3_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+if Player_Monitor == True:
+    Lifebar_3_3_IMAGE = pygame.image.load("Lifebar 3-3 8.0.png")
+    manual_scale = 0.099
+    Lifebar_3_3_IMAGE_Scaled = scale_image(Lifebar_3_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Lifebar_2_3_IMAGE = pygame.image.load("Lifebar 2-3 8.0.png")
-manual_scale = 0.099
-Lifebar_2_3_IMAGE_Scaled = scale_image(Lifebar_2_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Lifebar_2_3_IMAGE = pygame.image.load("Lifebar 2-3 8.0.png")
+    manual_scale = 0.099
+    Lifebar_2_3_IMAGE_Scaled = scale_image(Lifebar_2_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Lifebar_1_3_IMAGE = pygame.image.load("Lifebar 1-3 8.0.png")
-manual_scale = 0.099
-Lifebar_1_3_IMAGE_Scaled = scale_image(Lifebar_1_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Lifebar_1_3_IMAGE = pygame.image.load("Lifebar 1-3 8.0.png")
+    manual_scale = 0.099
+    Lifebar_1_3_IMAGE_Scaled = scale_image(Lifebar_1_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Lifebar_0_3_IMAGE = pygame.image.load("Lifebar 0-3 8.0.png")
-manual_scale = 0.099
-Lifebar_0_3_IMAGE_Scaled = scale_image(Lifebar_0_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Lifebar_0_3_IMAGE = pygame.image.load("Lifebar 0-3 8.0.png")
+    manual_scale = 0.099
+    Lifebar_0_3_IMAGE_Scaled = scale_image(Lifebar_0_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+else:
+    Lifebar_3_3_IMAGE = pygame.image.load("Lifebar 3-3 8.0.png")
+    manual_scale = 0.099 / 1.5
+    Lifebar_3_3_IMAGE_Scaled = scale_image(Lifebar_3_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Lifebar_2_3_IMAGE = pygame.image.load("Lifebar 2-3 8.0.png")
+    manual_scale = 0.099 / 1.5
+    Lifebar_2_3_IMAGE_Scaled = scale_image(Lifebar_2_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Lifebar_1_3_IMAGE = pygame.image.load("Lifebar 1-3 8.0.png")
+    manual_scale = 0.099 / 1.5
+    Lifebar_1_3_IMAGE_Scaled = scale_image(Lifebar_1_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Lifebar_0_3_IMAGE = pygame.image.load("Lifebar 0-3 8.0.png")
+    manual_scale = 0.099 / 1.5
+    Lifebar_0_3_IMAGE_Scaled = scale_image(Lifebar_0_3_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
 
 # Timebar images
-Timebar_5_5_IMAGE = pygame.image.load("Timebar_5-5.png")
-manual_scale = 0.076
-Timebar_5_5_IMAGE_Scaled = scale_image(Timebar_5_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+if Player_Monitor == True:    
+    Timebar_5_5_IMAGE = pygame.image.load("Timebar_5-5.png")
+    manual_scale = 0.076
+    Timebar_5_5_IMAGE_Scaled = scale_image(Timebar_5_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Timebar_4_5_IMAGE = pygame.image.load("Timebar_4-5.png")
-manual_scale = 0.076
-Timebar_4_5_IMAGE_Scaled = scale_image(Timebar_4_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Timebar_4_5_IMAGE = pygame.image.load("Timebar_4-5.png")
+    manual_scale = 0.076
+    Timebar_4_5_IMAGE_Scaled = scale_image(Timebar_4_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Timebar_3_5_IMAGE = pygame.image.load("Timebar_3-5.png")
-manual_scale = 0.076
-Timebar_3_5_IMAGE_Scaled = scale_image(Timebar_3_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Timebar_3_5_IMAGE = pygame.image.load("Timebar_3-5.png")
+    manual_scale = 0.076
+    Timebar_3_5_IMAGE_Scaled = scale_image(Timebar_3_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Timebar_2_5_IMAGE = pygame.image.load("Timebar_2-5.png")
-manual_scale = 0.076
-Timebar_2_5_IMAGE_Scaled = scale_image(Timebar_2_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Timebar_2_5_IMAGE = pygame.image.load("Timebar_2-5.png")
+    manual_scale = 0.076
+    Timebar_2_5_IMAGE_Scaled = scale_image(Timebar_2_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Timebar_1_5_IMAGE = pygame.image.load("Timebar_1-5_2.0.png")
-manual_scale = 0.076
-Timebar_1_5_IMAGE_Scaled = scale_image(Timebar_1_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Timebar_1_5_IMAGE = pygame.image.load("Timebar_1-5_2.0.png")
+    manual_scale = 0.076
+    Timebar_1_5_IMAGE_Scaled = scale_image(Timebar_1_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
-Timebar_0_5_IMAGE = pygame.image.load("Timebar_0-5_2.0.png")
-manual_scale = 0.076
-Timebar_0_5_IMAGE_Scaled = scale_image(Timebar_0_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+    Timebar_0_5_IMAGE = pygame.image.load("Timebar_0-5_2.0.png")
+    manual_scale = 0.076
+    Timebar_0_5_IMAGE_Scaled = scale_image(Timebar_0_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+else:
+    Timebar_5_5_IMAGE = pygame.image.load("Timebar_5-5.png")
+    manual_scale = 0.076 / 1.5
+    Timebar_5_5_IMAGE_Scaled = scale_image(Timebar_5_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Timebar_4_5_IMAGE = pygame.image.load("Timebar_4-5.png")
+    manual_scale = 0.076 / 1.5
+    Timebar_4_5_IMAGE_Scaled = scale_image(Timebar_4_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Timebar_3_5_IMAGE = pygame.image.load("Timebar_3-5.png")
+    manual_scale = 0.076 / 1.5
+    Timebar_3_5_IMAGE_Scaled = scale_image(Timebar_3_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Timebar_2_5_IMAGE = pygame.image.load("Timebar_2-5.png")
+    manual_scale = 0.076 / 1.5
+    Timebar_2_5_IMAGE_Scaled = scale_image(Timebar_2_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Timebar_1_5_IMAGE = pygame.image.load("Timebar_1-5_2.0.png")
+    manual_scale = 0.076 / 1.5
+    Timebar_1_5_IMAGE_Scaled = scale_image(Timebar_1_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
+
+    Timebar_0_5_IMAGE = pygame.image.load("Timebar_0-5_2.0.png")
+    manual_scale = 0.076 / 1.5
+    Timebar_0_5_IMAGE_Scaled = scale_image(Timebar_0_5_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
 
 # Powerup images
@@ -356,7 +398,7 @@ class Life_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = random.choice([0.4, 0.6])
+        self.direction_y = random.choice([0.4, 0.5, 0.6])
         self.image = Box_life_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -385,7 +427,7 @@ class Bigger_gap_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = random.choice([0.4, 0.6])
+        self.direction_y = random.choice([0.4, 0.5, 0.6])
         self.image = Box_bigger_gap_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -414,7 +456,7 @@ class Smaller_gap_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = random.choice([0.4, 0.6])
+        self.direction_y = random.choice([0.4, 0.5, 0.6])
         self.image = Box_smaller_gap_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -443,7 +485,7 @@ class Slow_time_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = random.choice([0.4, 0.6])
+        self.direction_y = random.choice([0.4, 0.5, 0.6])
         self.image = Box_slow_time_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -472,7 +514,7 @@ class Spikes_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = random.choice([0.4, 0.6])
+        self.direction_y = random.choice([0.4, 0.5, 0.6])
         self.image = Box_spikes_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
