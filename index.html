@@ -1,4 +1,4 @@
-<html lang="en-us"><script src="https://pygame-web.github.io/archives/0.9/pythons.js" type=module id=site data-LINES=57 data-CONSOLE=25 data-python=python3.12 data-os=vtx,fs,snd,gui async defer>#<!--
+<html lang="de"><script src="https://pygame-web.github.io/archives/0.9/pythons.js" type=module id=site data-LINES=57 data-CONSOLE=25 data-python=python3.12 data-os=vtx,fs,snd,gui async defer>#<!--
 
 import pygame
 pygame.init()
@@ -172,7 +172,7 @@ async def custom_site():
     if not platform.window.MM.UME:
 
         # now make a prompt
-        fnt = pygame.sysfont.SysFont("freesans",  uy(80) )
+        fnt = pygame.sysfont.SysFont("freesans",  uy(screen_width * 0.0417) )
         prompt = fnt.render("Ready to start !", True, "blue")
         pg_bar(track.len)
         screen.blit(prompt, ( marginx+ ux(80), marginy - uy(10) ) )
@@ -543,19 +543,6 @@ frameborder="1"
 
     // Event-Listener für den Button
     document.getElementById("fullscreenButton").addEventListener("click", toggleFullscreen);
-
-    function sendStatus(status) {
-        fetch('/update_status', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ waiting_for_input: status })
-        });
-    }
-
-    window.onblur = () => sendStatus(true);
-    window.onfocus = () => sendStatus(false);
 
     </script>
 

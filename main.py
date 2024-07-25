@@ -3,14 +3,27 @@
 import random
 import pygame
 import asyncio
-import time
+#import time
+#import os
 from pygame.locals import *
  
-# Initiate pygame and giver permissions to use pygames funktions
-pygame.init()
+# Initialization outside the loop
+#def read_status(): # Every related thing to pausing when status.txt = True does not work on a website
+#    try:
+#        path = os.path.abspath('status.txt')
+#        with open(path, 'r') as f:
+#            status = f.read().strip()
+#            print(f"Read status: {status} from {path}")
+#            return status == 'True'
+#    except FileNotFoundError:
+#        return False
+    
+#if __name__ == '__main__':
+#    pygame.init() # Initiate pygame and giver permissions to use pygames funktions
 #print("Game_started")
 
-# Mobile based resulotion: x = 1080; y = 2400
+# Mobile based resolution: x = 1080; y = 2400
+# Monitor based resolution: x = 1920 y = 1080
 # Blit options:
 # topleft: Die obere linke Ecke des Rechtecks.
 # topright: Die obere rechte Ecke des Rechtecks.
@@ -21,10 +34,11 @@ pygame.init()
 # midleft: Die Mitte der linken Kante des Rechtecks.
 # midright: Die Mitte der rechten Kante des Rechtecks.
 # center: Das Zentrum des Rechtecks.
+pygame.init() # Initiate pygame and giver permissions to use pygames funktions
 
 # Get the screen resolution
 screen_info = pygame.display.Info()
-screen_width, screen_height = screen_info.current_w, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360
+screen_width, screen_height = screen_info.current_w, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360; To get my phone resolution on FULLHD screen: screen_info.current_w -1434, screen_info.current_h
 screen = pygame.display.set_mode((screen_width, screen_height))
 Player_Monitor = False
 Obstacle_Monitor = False
@@ -35,18 +49,6 @@ if screen_width > screen_height:
    Jungle_IMAGE_Monitor = True
 gameDisplay_rect = screen.get_rect()
 pygame.display.set_caption('Dragonrace')
-
-waiting_for_input = False
-
-# Initialization outside the loop
-def read_status():
-    try:
-        with open('status.txt', 'r') as f:
-            status = f.read().strip()
-            return status == 'True'
-    except FileNotFoundError:
-        return False
-
 
 def get_font_size(base_size, base_resolution, current_resolution):
     width_ratio = current_resolution[0] / base_resolution[0]
@@ -69,10 +71,10 @@ def scale_image(base_image, base_resolution_image, current_resolution, manual_sc
 
 
 start_ticks = pygame.time.get_ticks()
-paused_ticks = 0
-paused_ticks_single = 0
+#paused_ticks = 0
+#paused_ticks_single = 0
 waiting_for_input = False
-start_waiting_for_input = False
+#start_waiting_for_input = False
 
 Player_move = True
 score_allowed = True
@@ -108,7 +110,7 @@ Lifebar_time = 500
 Lifebar_activation_time = True
 Lifebar_timer_check = True
 Lifebar_timer = 0
-random_box_timer = random.randrange(25000, 40000, 1000)
+random_box_timer = random.randrange(30000, 40000, 1000)
 
 Normal_Background_Sound = pygame.mixer.Sound("Dragonrace Normal 2.0.ogg")
 Thunder_Background_Sound = pygame.mixer.Sound("Dragonrace Thunder 2.0.ogg")
@@ -289,7 +291,7 @@ clock = pygame.time.Clock()
 
 score_background = pygame.Rect(screen_width * 0.1667, screen_height * 0.025, screen_width * 0.6667, screen_height * 0.0625)
 highscore_background = pygame.Rect(screen_width * 0.1481, screen_height * 0.5, screen_width * 0.7037, screen_height * 0.0833)
-New_personal_best_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938, screen_width * 0.9444, screen_height * 0.0563)
+New_personal_best_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938, screen_width * 0.9444, screen_height * 0.0625)
 move_info_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938 * 5.35, screen_width * 0.9444, screen_height * 0.0563)
 storm_info_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938 * 5.35 * 1.1, screen_width * 0.9444, screen_height * 0.0563)
 
@@ -311,9 +313,13 @@ if Player_Monitor == False:
     scaled_font_size_highscore = get_font_size(base_font_size_highscore, base_resolution, current_resolution)
     font_highscore = pygame.font.SysFont(None, scaled_font_size_highscore)
 
-    base_font_size_info = 60
+    base_font_size_info = 45
     scaled_font_size_info = get_font_size(base_font_size_info, base_resolution, current_resolution)
     font_info = pygame.font.SysFont(None, scaled_font_size_info)
+    
+    base_font_size_pbscore = 44
+    scaled_font_size_pbscore = get_font_size(base_font_size_pbscore, base_resolution, current_resolution)
+    font_pbscore = pygame.font.SysFont(None, scaled_font_size_pbscore)
 else:
     base_font_size_score = 75
     scaled_font_size_score = get_font_size(base_font_size_score, base_resolution, current_resolution)
@@ -325,7 +331,11 @@ else:
 
     base_font_size_info = 60
     scaled_font_size_info = get_font_size(base_font_size_info, base_resolution, current_resolution)
-    font_info = pygame.font.SysFont(None, scaled_font_size_info)   
+    font_info = pygame.font.SysFont(None, scaled_font_size_info)  
+    
+    base_font_size_pbscore = 75
+    scaled_font_size_pbscore = get_font_size(base_font_size_pbscore, base_resolution, current_resolution)
+    font_pbscore = pygame.font.SysFont(None, scaled_font_size_pbscore)
 #print("Font_finished")
 
 obstacle_speed = screen_height * 0.00167
@@ -335,7 +345,7 @@ player_y_spawn = screen_height * 0.75
 
 start_box_timer = 0
 box_claimed_timer = float("inf")
-all_boxes_size = int(manual_scale * 90)
+all_boxes_size = int(manual_scale * 80)
 # Powerup classes
 class Life_box(pygame.sprite.Sprite):
     def __init__(self):
@@ -346,7 +356,7 @@ class Life_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
+        self.direction_y = random.choice([0.4, 0.6])
         self.image = Box_life_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -375,7 +385,7 @@ class Bigger_gap_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
+        self.direction_y = random.choice([0.4, 0.6])
         self.image = Box_bigger_gap_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -404,7 +414,7 @@ class Smaller_gap_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
+        self.direction_y = random.choice([0.4, 0.6])
         self.image = Box_smaller_gap_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -433,7 +443,7 @@ class Slow_time_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
+        self.direction_y = random.choice([0.4, 0.6])
         self.image = Box_slow_time_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -462,7 +472,7 @@ class Spikes_box(pygame.sprite.Sprite):
         self.rect = Rect(self.x, self.y, self.size, self.size)
         self.speed = obstacle_speed * 4
         self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
+        self.direction_y = random.choice([0.4, 0.6])
         self.image = Box_spikes_IMAGE_Scaled
         self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
 
@@ -595,15 +605,14 @@ else:
 restart_text = font_restart_text.render('Restart', True, color_button_restart) 
 
 
-while waiting_for_input == True:  # With that the game on the website does not load before you interact with it
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-            start_ticks = pygame.time.get_ticks()
-            last_obstacle_spawn_time = pygame.time.get_ticks()
-            start_box_timer = pygame.time.get_ticks()
-            waiting_for_input = False
+#while waiting_for_input == True:  # With that the game on the website does not load before you interact with it
+#    for event in pygame.event.get():
+#        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
+#            start_ticks = pygame.time.get_ticks()
+#            last_obstacle_spawn_time = pygame.time.get_ticks()
+#            start_box_timer = pygame.time.get_ticks()
+#            waiting_for_input = False
 
-waiting_for_input = False
 while waiting_for_input == False:  # With that the game on the website does not load before you interact with it
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
@@ -670,17 +679,19 @@ async def main():
     global smaller_gap
     global bigger_gap
     global waiting_for_input
-    global paused_ticks
-    global paused_ticks_single
-    global start_waiting_for_input
-    global status
+    #global paused_ticks
+    #global paused_ticks_single
+    #global start_waiting_for_input
+    #global status
+    #global path
+    #global read_status
 
     # Creating an infinite loop to run the game
     while run:
    
         # Updating within the loop
-        waiting_for_input = read_status()
-        print(f"waiting_for_input: {waiting_for_input}")
+        #waiting_for_input = read_status()
+        #print(f"waiting_for_input: {waiting_for_input}")
 
         #if 2000 < pygame.time.get_ticks() - start_ticks < 2100:
         #   waiting_for_input = True    
@@ -689,28 +700,28 @@ async def main():
         #if 14000 < pygame.time.get_ticks() - start_ticks < 14100:
         #   waiting_for_input = True
 
-        if waiting_for_input:
-           pause_start = pygame.time.get_ticks()
-           pygame.mixer_music.pause()
-           start_waiting_for_input = True      
-        else:
-           if start_waiting_for_input == True:
-             pygame.mixer_music.unpause()
-             start_waiting_for_input = False 
+        #if waiting_for_input:
+        #   pause_start = pygame.time.get_ticks()
+        #   pygame.mixer_music.pause()
+        #   start_waiting_for_input = True      
+        #else:
+        #   if start_waiting_for_input == True:
+        #     pygame.mixer_music.unpause()
+        #     start_waiting_for_input = False 
              
-        while waiting_for_input:  # With that the game on the website does not load if waiting_for_input is True  
-            time.sleep(1)
-            waiting_for_input = read_status()
-            print(f"waiting_for_input: {waiting_for_input}")             
-            if waiting_for_input == False:
-                paused_ticks = pygame.time.get_ticks() - pause_start + paused_ticks # Takes the ammount of pause time
-                start_box_timer = start_box_timer + paused_ticks
-                paused_ticks_single = pygame.time.get_ticks() - pause_start
-                last_obstacle_spawn_time = last_obstacle_spawn_time + paused_ticks_single
-                start_waiting_for_input = True           
+        #while waiting_for_input:  # With that the game on the website does not load if waiting_for_input is True  
+        #    time.sleep(1)
+        #    waiting_for_input = read_status()
+        #    print(f"waiting_for_input: {waiting_for_input}")             
+        #    if waiting_for_input == False:
+        #        paused_ticks = pygame.time.get_ticks() - pause_start + paused_ticks # Takes the ammount of pause time
+        #        start_box_timer = start_box_timer + paused_ticks
+        #        paused_ticks_single = pygame.time.get_ticks() - pause_start
+        #        last_obstacle_spawn_time = last_obstacle_spawn_time + paused_ticks_single
+        #        start_waiting_for_input = True           
         
         if score_allowed == True:
-          score = (pygame.time.get_ticks() - start_ticks - paused_ticks) // 1000    
+          score = (pygame.time.get_ticks() - start_ticks) // 1000    #score = (pygame.time.get_ticks() - start_ticks - paused_ticks) // 1000  
           
         if pygame.time.get_ticks() - last_obstacle_spawn_time > obstacle_spawn_time:
             # If 150 score is reached the area to fly through gets smaller
@@ -758,8 +769,7 @@ async def main():
             obstacle_right = Obstacle_Right(width_obstacle_right)
             Obstacles.add(obstacle_left, obstacle_right)
             obstacles_left.add(obstacle_left)
-            obstacles_right.add(obstacle_right)
-            
+            obstacles_right.add(obstacle_right)          
             #print("New_obstacle_loaded")
             
             if Player_Monitor == True:
@@ -816,9 +826,9 @@ async def main():
     
 
         score_text = font_score.render("Score:" + str(score), True, text_color)
-        New_personal_best_text = font_score.render("New personal best!", True, text_color)
-        move_info_text = font_info.render("Move with WASD, mouse or finger.", True, move_info_text_color)
-        storm_info_text = font_info.render("A storm is coming, dodge the clouds!", True, storm_info_text_color)
+        New_personal_best_text = font_pbscore.render("New personal best!", True, text_color)
+        move_info_text = font_info.render("Bewege dich mit WASD, Maus oder Finger.", True, move_info_text_color)
+        storm_info_text = font_info.render("Ein Sturm zieht auf. Weiche den Wolken aus!", True, storm_info_text_color)
 
         if Jungle_rain == True:
            screen.blit(Jungle_IMAGE_Scaled_rain, (0,0))
@@ -848,9 +858,6 @@ async def main():
         else:
           obstacles_left.draw(screen)
           obstacles_right.draw(screen)
-        
-        if start_box_timer == 0:
-          start_box_timer = pygame.time.get_ticks()
 
 
         life_box = Life_box()
@@ -859,11 +866,14 @@ async def main():
         slow_time_box = Slow_time_box()
         spikes_box = Spikes_box()
 
+        if start_box_timer == 0:
+          start_box_timer = pygame.time.get_ticks()
+
         #random_box_timer = random.randrange(500, 1000, 500)
         if pygame.time.get_ticks() - start_box_timer  > random_box_timer:
            #print(random_box_timer)
            #print(pygame.time.get_ticks() - start_box_timer)
-           random_box_timer = random.randrange(25000, 40000, 1000)
+           random_box_timer = random.randrange(30000, 40000, 1000)
            start_box_timer = pygame.time.get_ticks()
            random_box = random.randint(1,5)
            if random_box == 1:
@@ -876,55 +886,6 @@ async def main():
              smaller_gap_box_group.add(smaller_gap_box)
            if random_box == 5:
              spikes_box_group.add(spikes_box)
-
-        pygame.draw.rect(screen, (170, 169, 173), score_background)
-    
-        screen.blit(score_text, (screen_width * 0.2315, screen_height * 0.0375))
-        if score >= highscore:
-          pygame.draw.rect(screen, (170, 169, 173), New_personal_best_background)
-          screen.blit(New_personal_best_text, (screen_width * 0.0463, screen_height * 0.1021))
-          
-        if pygame.time.get_ticks() - start_ticks > 7000:
-          move_info = False
-          storm_info = False
-        
-        if move_info == True and storm_info == True:
-          pygame.draw.rect(screen, (170, 169, 173), move_info_background)
-          screen.blit(move_info_text, (screen_width * 0.0463, screen_height * 0.1021 * 5))    
-          pygame.draw.rect(screen, (170, 169, 173), storm_info_background)
-          screen.blit(storm_info_text, (screen_width * 0.0463, screen_height * 0.1021 * 5.5))  
-        
-        if Lifebar_3_3 == True:
-            screen.blit(Lifebar_3_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_3_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
-
-        if Lifebar_2_3 == True:
-            screen.blit(Lifebar_2_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_2_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
-
-        if Lifebar_1_3 == True:
-            screen.blit(Lifebar_1_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_1_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
-
-        if Lifebar_0_3 == True:
-            screen.blit(Lifebar_0_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_0_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
-          
-
-        if Timebar_5_5 == True:
-            screen.blit(Timebar_5_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_5_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
-
-        if Timebar_4_5 == True:
-            screen.blit(Timebar_4_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_4_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
-          
-        if Timebar_3_5 == True:
-            screen.blit(Timebar_3_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_3_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
-      
-        if Timebar_2_5 == True:
-            screen.blit(Timebar_2_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_2_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
-          
-        if Timebar_1_5 == True:
-            screen.blit(Timebar_1_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_1_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
-
-        if Timebar_0_5 == True:
-            screen.blit(Timebar_0_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_0_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
-              
 
         if Lifebar_timer_check == True:  # If 550 milliseconds have past the game allows a player hit
           if pygame.time.get_ticks() - Lifebar_timer > 550:
@@ -1055,7 +1016,86 @@ async def main():
         slow_time_box_group.draw(screen)
         spikes_box_group.update()
         spikes_box_group.draw(screen)
+        
+        if pygame.time.get_ticks() - start_ticks > 7000:
+          move_info = False
+          storm_info = False
+        
+        if move_info == True and storm_info == True:
+          pygame.draw.rect(screen, (170, 169, 173), move_info_background)
+          screen.blit(move_info_text, (screen_width * 0.0463, screen_height * 0.1021 * 5))    
+          pygame.draw.rect(screen, (170, 169, 173), storm_info_background)
+          screen.blit(storm_info_text, (screen_width * 0.0463, screen_height * 0.1021 * 5.5))  
+        
+        pygame.draw.rect(screen, (170, 169, 173), score_background)
+    
+        screen.blit(score_text, (screen_width * 0.2315, screen_height * 0.0375))
+        if score >= highscore:
+          pygame.draw.rect(screen, (170, 169, 173), New_personal_best_background)
+          screen.blit(New_personal_best_text, (screen_width * 0.0463, screen_height * 0.1021))
+        
+        if Player_Monitor == True:
+            if Lifebar_3_3 == True:
+                screen.blit(Lifebar_3_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_3_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
 
+            if Lifebar_2_3 == True:
+                screen.blit(Lifebar_2_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_2_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
+
+            if Lifebar_1_3 == True:
+                screen.blit(Lifebar_1_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_1_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
+
+            if Lifebar_0_3 == True:
+                screen.blit(Lifebar_0_3_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Lifebar_0_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5))
+          
+
+            if Timebar_5_5 == True:
+                screen.blit(Timebar_5_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_5_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
+
+            if Timebar_4_5 == True:
+                screen.blit(Timebar_4_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_4_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
+          
+            if Timebar_3_5 == True:
+                screen.blit(Timebar_3_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_3_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
+      
+            if Timebar_2_5 == True:
+                screen.blit(Timebar_2_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_2_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
+          
+            if Timebar_1_5 == True:
+                screen.blit(Timebar_1_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_1_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
+
+            if Timebar_0_5 == True:
+                screen.blit(Timebar_0_5_IMAGE_Scaled, (screen_width * 0.1667 + screen_width * 0.6667 - Timebar_0_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9))
+        else:
+            if Lifebar_3_3 == True:
+                screen.blit(Lifebar_3_3_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Lifebar_3_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5 * 3.8))
+
+            if Lifebar_2_3 == True:
+                screen.blit(Lifebar_2_3_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Lifebar_2_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5 * 3.8))
+
+            if Lifebar_1_3 == True:
+                screen.blit(Lifebar_1_3_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Lifebar_1_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5 * 3.8))
+
+            if Lifebar_0_3 == True:
+                screen.blit(Lifebar_0_3_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Lifebar_0_3_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 1.5 * 3.8))
+          
+
+            if Timebar_5_5 == True:
+                screen.blit(Timebar_5_5_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Timebar_5_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9 * 2.1))
+
+            if Timebar_4_5 == True:
+                screen.blit(Timebar_4_5_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Timebar_4_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9 * 2.1))
+          
+            if Timebar_3_5 == True:
+                screen.blit(Timebar_3_5_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Timebar_3_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9 * 2.1))
+      
+            if Timebar_2_5 == True:
+                screen.blit(Timebar_2_5_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Timebar_2_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9 * 2.1))
+          
+            if Timebar_1_5 == True:
+                screen.blit(Timebar_1_5_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Timebar_1_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9 * 2.1))
+
+            if Timebar_0_5 == True:
+                screen.blit(Timebar_0_5_IMAGE_Scaled, (screen_width * 0.0278 + screen_width * 0.9444 - Timebar_0_5_IMAGE_Scaled.get_width(), screen_height * 0.01667 * 2 * 1.9 * 2.1))
 
         if pygame.time.get_ticks() - box_claimed_timer > 0:
            Timebar_5_5 = True
@@ -1229,7 +1269,7 @@ async def main():
                             first_hit = True
                             cooldown = False
                             waiting_for_input = False
-                            start_waiting_for_input = False
+                            #start_waiting_for_input = False
                         
                             life_box_group.empty()
                             smaller_gap_box_group.empty()
@@ -1237,9 +1277,9 @@ async def main():
                             slow_time_box_group.empty()
                             spikes_box_group.empty()
 
-                            paused_ticks = 0
-                            paused_ticks_single = 0
-                            random_box_timer = random.randrange(25000, 40000, 1000)
+                            #paused_ticks = 0
+                            #paused_ticks_single = 0
+                            random_box_timer = random.randrange(30000, 40000, 1000)
                             Lifebar_time = 0
                             Lifebar_activation_time = True
                             start_ticks = pygame.time.get_ticks()
@@ -1296,11 +1336,11 @@ async def main():
 
         # Looks if the player is moving left or right
         current_x = Player.rect.x
-        if current_x < prev_x - screen_width * 0.00463:  # Moves left
+        if current_x < prev_x - screen_height * 0.00356:  # Moves left
             Dragon_IMAGE_Scaled_allowed = False
             Dragon_IMAGE_Scaled_Left_allowed = True
             Dragon_IMAGE_Scaled_Right_allowed = False
-        elif current_x > prev_x + screen_width * 0.00463:  # Moves right
+        elif current_x > prev_x + screen_height * 0.00356:  # Moves right
             Dragon_IMAGE_Scaled_allowed = False
             Dragon_IMAGE_Scaled_Left_allowed = False
             Dragon_IMAGE_Scaled_Right_allowed = True
