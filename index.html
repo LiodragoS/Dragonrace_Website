@@ -172,7 +172,7 @@ async def custom_site():
     if not platform.window.MM.UME:
 
         # now make a prompt
-        fnt = pygame.sysfont.SysFont("freesans",  uy(screen_width * 0.0417 * 1.5) )
+        fnt = pygame.sysfont.SysFont("freesans",  uy(screen_width * 0.0417 * 1.45) )
         prompt = fnt.render("Ready to start !", True, "blue")
         pg_bar(track.len)
         screen.blit(prompt, ( marginx+ ux(20), screen_height / 2 * 0.84 ) )
@@ -369,7 +369,7 @@ config = {
 
 <body>
 
-    <button id="fullscreenButton">Toggle Fullscreen</button>
+    <button id="fullscreenButton" style="display: none;">Toggle Fullscreen</button>
     
     <div id="transfer" align=center>
 <!--        <div class="spinner" id='spinner'></div> -->
@@ -507,42 +507,53 @@ frameborder="1"
         window.frames["iframe"].location = url;
     }
 
-    // Funktion zum Wechseln in den Vollbildmodus
-    function openFullscreen() {
-        var elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { // Safari
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { // IE11
-            elem.msRequestFullscreen();
-        }
-    }
+    var canvas = document.getElementById('canvas');
+    var progressElement = document.getElementById('progress');
+    var fullscreenButton = document.getElementById('fullscreenButton');
+    var progressComplete = false;
 
-    // Funktion zum Beenden des Vollbildmodus
-    function closeFullscreen() {
+    // Funktion zur Überwachung des Fortschrittsbalkens
+    let track = setInterval(function(){
+    let val = Math.floor(Math.random() * 20) + 1;
+    progressElement.value += val;
+    if(progressElement.value >= 100){
+        clearInterval(track);
+        progressComplete = true;
+        console.log('Fortschritt 100% erreicht');
+    }
+    }, 500);
+
+    // Event-Listener für die Interaktion mit dem Bildschirm
+    document.addEventListener('click', function() {
+    if (progressComplete) {
+        fullscreenButton.style.display = 'block';
+    }
+    });
+
+    // Event-Listener für den Toggle Fullscreen Button
+    fullscreenButton.addEventListener('click', function() {
+    if (!document.fullscreenElement) {
+        if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+        } else if (canvas.mozRequestFullScreen) { // Firefox
+        canvas.mozRequestFullScreen();
+        } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        canvas.webkitRequestFullscreen();
+        } else if (canvas.msRequestFullscreen) { // IE/Edge
+        canvas.msRequestFullscreen();
+        }
+    } else {
         if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { // Safari
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE11
-            document.msExitFullscreen();
+        document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+        document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+        document.msExitFullscreen();
         }
     }
-
-    // Funktion zum Umschalten des Vollbildmodus
-    function toggleFullscreen() {
-        if (!document.fullscreenElement &&    // alternative Standardmethode
-            !document.webkitFullscreenElement && // alternative WebKit-Methode
-            !document.msFullscreenElement) { // alternative MS-Methode
-            openFullscreen();
-        } else {
-            closeFullscreen();
-        }
-    }
-
-    // Event-Listener für den Button
-    document.getElementById("fullscreenButton").addEventListener("click", toggleFullscreen);
+    });
 
     </script>
 
