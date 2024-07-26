@@ -472,6 +472,7 @@ progressElement.value += val;
 if(progressElement.value >= 50){
     clearInterval(track);
     progressComplete = true;
+    progressElement.value = 50
     console.log('Fortschritt 50% erreicht');
 }
 }, 500);
