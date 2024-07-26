@@ -458,6 +458,61 @@ frameborder="1"
 
     }
 
+var canvas = document.getElementById('canvas');
+var progressElement = document.getElementById('progress');
+var fullscreenButton = document.getElementById('fullscreenButton');
+var progressComplete = false;
+
+// Funktion zur Überwachung des Fortschrittsbalkens
+let track = setInterval(function(){
+let val = Math.floor(Math.random() * 20) + 1;
+progressElement.value += val;
+if(progressElement.value >= 100){
+    clearInterval(track);
+    progressComplete = true;
+    console.log('Fortschritt 100% erreicht');
+}
+}, 500);
+
+    // Event-Listener für die Interaktion mit dem Bildschirm
+    document.addEventListener('click', function() {
+    if (progressComplete) {
+        fullscreenButton.style.display = 'block';
+    }
+    });
+
+    // Event-Listener für den Toggle Fullscreen Button
+    fullscreenButton.addEventListener('click', function() {
+    if (!document.fullscreenElement) {
+        if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+        } else if (canvas.mozRequestFullScreen) { // Firefox
+        canvas.mozRequestFullScreen();
+        } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        canvas.webkitRequestFullscreen();
+        } else if (canvas.msRequestFullscreen) { // IE/Edge
+        canvas.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+        document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+        document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+        document.msExitFullscreen();
+        }
+    }
+    });
+
+    // Optional: Event-Listener, um den Toggle Fullscreen Button bei Fullscreen-Änderungen zu steuern
+    document.onfullscreenchange = function (event) {
+    if (!document.fullscreenElement) {
+        fullscreenButton.style.display = 'block';
+    }
+    };
+
     function custom_prerun(){
         // no python main and no (MEMFS + VFS) yet.
         console.log(__FILE__, "custom_prerun")
@@ -506,54 +561,6 @@ frameborder="1"
     function frame_online(url) {
         window.frames["iframe"].location = url;
     }
-
-    var canvas = document.getElementById('canvas');
-    var progressElement = document.getElementById('progress');
-    var fullscreenButton = document.getElementById('fullscreenButton');
-    var progressComplete = false;
-
-    // Funktion zur Überwachung des Fortschrittsbalkens
-    let track = setInterval(function(){
-    let val = Math.floor(Math.random() * 20) + 1;
-    progressElement.value += val;
-    if(progressElement.value >= 100){
-        clearInterval(track);
-        progressComplete = true;
-        console.log('Fortschritt 100% erreicht');
-    }
-    }, 500);
-
-    // Event-Listener für die Interaktion mit dem Bildschirm
-    document.addEventListener('click', function() {
-    if (progressComplete) {
-        fullscreenButton.style.display = 'block';
-    }
-    });
-
-    // Event-Listener für den Toggle Fullscreen Button
-    fullscreenButton.addEventListener('click', function() {
-    if (!document.fullscreenElement) {
-        if (canvas.requestFullscreen) {
-        canvas.requestFullscreen();
-        } else if (canvas.mozRequestFullScreen) { // Firefox
-        canvas.mozRequestFullScreen();
-        } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        canvas.webkitRequestFullscreen();
-        } else if (canvas.msRequestFullscreen) { // IE/Edge
-        canvas.msRequestFullscreen();
-        }
-    } else {
-        if (document.exitFullscreen) {
-        document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-        document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-        document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-        document.msExitFullscreen();
-        }
-    }
-    });
 
     </script>
 
