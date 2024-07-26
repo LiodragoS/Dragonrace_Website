@@ -469,13 +469,20 @@ frameborder="1"
 let track = setInterval(function(){
 let val = Math.floor(Math.random() * 20) + 1;
 progressElement.value += val;
-if(progressElement.value >= 50){
+if(progressElement.value >= 90){
     clearInterval(track);
     progressComplete = true;
-    progressElement.value = 50
-    console.log('Fortschritt 50% erreicht');
+    progressElement.value = 90
+    console.log('Fortschritt 90% erreicht');
 }
 }, 500);
+
+// Event-Listener für die Interaktion mit dem Bildschirm
+document.addEventListener('click', function() {
+if (!userInteracted) {
+    userInteracted = true;
+}
+});
 
 // Event-Listener für die Interaktion mit dem Bildschirm
 document.addEventListener('click', function() {
