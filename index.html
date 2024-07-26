@@ -465,59 +465,58 @@ frameborder="1"
     var userInteracted = false;
     var interactionTime = 0;
 
-    // Funktion zur Überwachung des Fortschrittsbalkens
-    let track = setInterval(function(){
-    let val = Math.floor(Math.random() * 20) + 1;
-    progressElement.value += val;
-    if(progressElement.value >= 50){
-        clearInterval(track);
-        progressElement.value >= 50; // Sicherstellen, dass es genau 50% sind
-        progressComplete = true;
-        console.log('Fortschritt 50% erreicht');
-    }
-    }, 500);
+// Funktion zur Überwachung des Fortschrittsbalkens
+let track = setInterval(function(){
+let val = Math.floor(Math.random() * 20) + 1;
+progressElement.value += val;
+if(progressElement.value >= 50){
+    clearInterval(track);
+    progressComplete = true;
+    console.log('Fortschritt 50% erreicht');
+}
+}, 500);
 
-    // Event-Listener für die Interaktion mit dem Bildschirm
-    document.addEventListener('click', function() {
-    if (progressComplete && !userInteracted) {
-        userInteracted = true;
-        interactionTime = Date.now();
-        console.log('Benutzer hat interagiert');
-        
-        // Starte den 15-Sekunden-Timer
-        setTimeout(function() {
-        if (userInteracted && (Date.now() - interactionTime >= 14000)) {
-            fullscreenButton.style.display = 'block';
-            console.log('14 Sekunden nach Interaktion vorbei, Button wird angezeigt');
-        }
-        }, 14000);
+// Event-Listener für die Interaktion mit dem Bildschirm
+document.addEventListener('click', function() {
+if (progressComplete && !userInteracted) {
+    userInteracted = true;
+    interactionTime = Date.now();
+    console.log('Benutzer hat interagiert');
+    
+    // Starte den 15-Sekunden-Timer
+    setTimeout(function() {
+    if (userInteracted && (Date.now() - interactionTime >= 14000)) {
+        fullscreenButton.style.display = 'block';
+        console.log('14 Sekunden nach Interaktion vorbei, Button wird angezeigt');
     }
-    });
+    }, 14000);
+}
+});
 
-    // Event-Listener für den Toggle Fullscreen Button
-    fullscreenButton.addEventListener('click', function() {
-    if (!document.fullscreenElement) {
-        if (canvas.requestFullscreen) {
-        canvas.requestFullscreen();
-        } else if (canvas.mozRequestFullScreen) { // Firefox
-        canvas.mozRequestFullScreen();
-        } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        canvas.webkitRequestFullscreen();
-        } else if (canvas.msRequestFullscreen) { // IE/Edge
-        canvas.msRequestFullscreen();
-        }
-    } else {
-        if (document.exitFullscreen) {
-        document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-        document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-        document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-        document.msExitFullscreen();
-        }
+// Event-Listener für den Toggle Fullscreen Button
+fullscreenButton.addEventListener('click', function() {
+if (!document.fullscreenElement) {
+    if (canvas.requestFullscreen) {
+    canvas.requestFullscreen();
+    } else if (canvas.mozRequestFullScreen) { // Firefox
+    canvas.mozRequestFullScreen();
+    } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
+    canvas.webkitRequestFullscreen();
+    } else if (canvas.msRequestFullscreen) { // IE/Edge
+    canvas.msRequestFullscreen();
     }
-    });
+} else {
+    if (document.exitFullscreen) {
+    document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { // Firefox
+    document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+    document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { // IE/Edge
+    document.msExitFullscreen();
+    }
+}
+});
 
 
     function custom_prerun(){
