@@ -469,11 +469,11 @@ frameborder="1"
     let track = setInterval(function(){
     let val = Math.floor(Math.random() * 20) + 1;
     progressElement.value += val;
-    if(progressElement.value >= 1){
+    if(progressElement.value >= 50){
         clearInterval(track);
-        progressElement.value >= 1; // Sicherstellen, dass es genau 1% ist
+        progressElement.value >= 50; // Sicherstellen, dass es genau 50% sind
         progressComplete = true;
-        console.log('Fortschritt 1% erreicht');
+        console.log('Fortschritt 50% erreicht');
     }
     }, 500);
 
