@@ -73,7 +73,7 @@ def scale_image(base_image, base_resolution_image, current_resolution, manual_sc
 start_ticks = pygame.time.get_ticks()
 #paused_ticks = 0
 #paused_ticks_single = 0
-waiting_for_input = False
+#waiting_for_input = False
 #start_waiting_for_input = False
 
 Player_move = True
@@ -655,14 +655,14 @@ restart_text = font_restart_text.render('Restart', True, color_button_restart)
 #            start_box_timer = pygame.time.get_ticks()
 #            waiting_for_input = False
 
-while waiting_for_input == False:  # With that the game on the website does not load before you interact with it
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-            start_ticks = pygame.time.get_ticks()
-            last_obstacle_spawn_time = pygame.time.get_ticks()
-            start_box_timer = pygame.time.get_ticks()
-            waiting_for_input = True
-waiting_for_input = False
+#while waiting_for_input == False:  # With that the game on the website does not load before you interact with it
+#    for event in pygame.event.get():
+#        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
+#            start_ticks = pygame.time.get_ticks()
+#            last_obstacle_spawn_time = pygame.time.get_ticks()
+#            start_box_timer = pygame.time.get_ticks()
+#            waiting_for_input = True
+#waiting_for_input = False
 #print("All_set")  
       
 run = True
@@ -720,7 +720,7 @@ async def main():
     global random_box_timer
     global smaller_gap
     global bigger_gap
-    global waiting_for_input
+    #global waiting_for_input
     #global paused_ticks
     #global paused_ticks_single
     #global start_waiting_for_input
@@ -1310,7 +1310,7 @@ async def main():
                             Lifebar_timer_check = True
                             first_hit = True
                             cooldown = False
-                            waiting_for_input = False
+                            #waiting_for_input = False
                             #start_waiting_for_input = False
                         
                             life_box_group.empty()
