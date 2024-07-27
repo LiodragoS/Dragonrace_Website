@@ -508,23 +508,25 @@ frameborder="1"
     }
 
     var canvas = document.getElementById('canvas');
-    var progressElement = document.getElementById('progress');
     var fullscreenButton = document.getElementById('fullscreenButton');
-    var progressComplete = false;
     var userInteracted = false;
     var interactionTime = 0;
 
-    // Funktion zur Überwachung des Fortschrittsbalkens
-    let track = setInterval(function() {
-        let val = Math.floor(Math.random() * 20) + 1;
-        progressElement.value += val;
-        if (progressElement.value >= 50) {
-            clearInterval(track);
-            progressComplete = true;
-            progressElement.value = 100;
-            console.log('Fortschritt 50% erreicht');
+    // Event-Listener für die Interaktion mit dem Bildschirm
+    document.addEventListener('click', function() {
+        if (!userInteracted) {
+            userInteracted = true;
+            interactionTime = Date.now();
+            console.log('Benutzer hat interagiert');
+
+            // Starte den 2-Sekunden-Timer
+            setTimeout(function() {
+                if (userInteracted && (Date.now() - interactionTime >= 2000)) {
+                    showFullscreenButton();
+                }
+            }, 2000);
         }
-    }, 500);
+    });
 
     // Event-Listener für die Interaktion mit dem Bildschirm
     window.addEventListener('click', function() {
@@ -533,12 +535,12 @@ frameborder="1"
             interactionTime = Date.now();
             console.log('Benutzer hat interagiert');
 
-            // Starte den 14-Sekunden-Timer
+            // Starte den 2-Sekunden-Timer
             setTimeout(function() {
-                if (userInteracted && (Date.now() - interactionTime >= 14000) && progressComplete) {
+                if (userInteracted && (Date.now() - interactionTime >= 2000)) {
                     showFullscreenButton();
                 }
-            }, 14000);
+            }, 2000);
         }
     });
 

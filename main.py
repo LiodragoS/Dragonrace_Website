@@ -71,6 +71,7 @@ def scale_image(base_image, base_resolution_image, current_resolution, manual_sc
 
 
 start_ticks = pygame.time.get_ticks()
+start_ticks_score = pygame.time.get_ticks() + 12000
 #paused_ticks = 0
 #paused_ticks_single = 0
 #waiting_for_input = False
@@ -720,6 +721,7 @@ async def main():
     global random_box_timer
     global smaller_gap
     global bigger_gap
+    global start_ticks_score
     #global waiting_for_input
     #global paused_ticks
     #global paused_ticks_single
@@ -763,7 +765,7 @@ async def main():
         #        start_waiting_for_input = True           
         
         if score_allowed == True:
-          score = (pygame.time.get_ticks() - start_ticks) // 1000    #score = (pygame.time.get_ticks() - start_ticks - paused_ticks) // 1000  
+          score = (pygame.time.get_ticks() - start_ticks_score) // 1000    #score = (pygame.time.get_ticks() - start_ticks - paused_ticks) // 1000  
           
         if pygame.time.get_ticks() - last_obstacle_spawn_time > obstacle_spawn_time:
             # If 150 score is reached the area to fly through gets smaller
@@ -1325,6 +1327,7 @@ async def main():
                             Lifebar_time = 0
                             Lifebar_activation_time = True
                             start_ticks = pygame.time.get_ticks()
+                            start_ticks_score = pygame.time.get_ticks()
                             start_box_timer = 0
                             last_obstacle_spawn_time = pygame.time.get_ticks()
                             obstacle_speed = screen_height * 0.00167
